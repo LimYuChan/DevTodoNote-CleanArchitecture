@@ -13,4 +13,6 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "DevTodoNote-CleanArchitecture"
-include ':app'
+include ':presentation'
+include ':data'
+include ':domain'
