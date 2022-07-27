@@ -1,6 +1,9 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id(Plugins.NameTag.KotlinKAPT)
+    id(Plugins.NameTag.KotlinParcelize)
+    id(Plugins.NameTag.DaggerHiltAndroid)
 }
 
 android {
@@ -38,11 +41,37 @@ dependencies {
 
     implementation(Dependencies.AndroidX.CoreKtx)
     implementation(Dependencies.AndroidX.AppCompat)
+    //Ui
+    implementation(Dependencies.AndroidX.ViewPager)
+    implementation(Dependencies.AndroidX.ConstraintLayout)
+    implementation(Dependencies.AndroidX.SwipeRefreshLayout)
+    //view
+    implementation(Dependencies.AndroidX.ActivityKtx)
+    implementation(Dependencies.AndroidX.FragmentKtx)
+    //Navigation
+    implementation(Dependencies.AndroidX.NavigationFragmentKtx)
+    implementation(Dependencies.AndroidX.NavigationUiKtx)
+    //ViewModel
+    implementation(Dependencies.AndroidX.LifecycleViewModelKtx)
+    implementation(Dependencies.AndroidX.LifecycleViewModelSaveState)
+
+    implementation(Dependencies.Kotlin.Coroutine)
 
     implementation(Dependencies.Google.AndroidMaterial)
-    implementation(Dependencies.AndroidX.ConstraintLayout)
 
     testImplementation(Dependencies.Test.Junit)
     androidTestImplementation(Dependencies.Test.TestExtJunit)
     androidTestImplementation(Dependencies.Test.TestEspressoCore)
+
+    implementation(Dependencies.Lottie.Lottie)
+
+    implementation(Dependencies.DaggerHilt.HiltAndroid)
+    kapt(Dependencies.DaggerHilt.HiltAndroidCompiler)
+
+    implementation(Dependencies.Glide.Glide)
+    annotationProcessor(Dependencies.Glide.GlideCompiler)
+
+    implementation(Dependencies.Permission.TedPermission)
+
+
 }

@@ -1,8 +1,24 @@
 object Dependencies {
     object AndroidX{
+        private const val NAVIGATION_VERSION = "2.5.0"
+        private const val VIEW_MODEL_VERSION = "2.5.0"
+        private const val VIEW_KTX_VERSION = "1.5.0"
+
         const val CoreKtx = "androidx.core:core-ktx:1.8.0"
         const val AppCompat = "androidx.appcompat:appcompat:1.4.2"
         const val ConstraintLayout = "androidx.constraintlayout:constraintlayout:2.1.4"
+        const val ViewPager = "androidx.viewpager2:viewpager2:1.0.0"
+
+        const val NavigationFragmentKtx = "androidx.navigation:navigation-fragment-ktx:$NAVIGATION_VERSION"
+        const val NavigationUiKtx = "androidx.navigation:navigation-ui-ktx:$NAVIGATION_VERSION"
+
+        const val LifecycleViewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$VIEW_MODEL_VERSION"
+        const val LifecycleViewModelSaveState = "androidx.lifecycle:lifecycle-viewmodel-savedstate:$VIEW_MODEL_VERSION"
+
+        const val FragmentKtx = "androidx.fragment:fragment-ktx:$VIEW_KTX_VERSION"
+        const val ActivityKtx = "androidx.activity:activity-ktx:$VIEW_KTX_VERSION"
+
+        const val SwipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     }
     object Kotlin{
         const val Coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9"
@@ -45,4 +61,17 @@ object Dependencies {
         const val UrlConnection = "com.squareup.okhttp3:okhttp-urlconnection:3.14.9"
     }
 
+    object Lottie{
+        const val Lottie = "com.airbnb.android:lottie:5.2.0"
+    }
+
+    object Glide{
+        const val Glide = "com.github.bumptech.glide:glide:4.13.2"
+        const val GlideCompiler = "com.github.bumptech.glide:compiler:4.11.0"
+    }
+
+    object Permission{
+
+        const val TedPermission = "io.github.ParkSangGwon:tedpermission-normal:3.3.0"
+    }
 }
