@@ -1,8 +1,9 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    id("com.android.application") version("7.2.1") apply(false)
-    id("com.android.library") version("7.2.1") apply(false)
-    id("org.jetbrains.kotlin.android") version("1.7.0") apply(false)
+    id(Plugins.Path.AndroidApplication) version(Plugins.Version.ANDROID) apply(false)
+    id(Plugins.Path.AndroidLibrary) version(Plugins.Version.ANDROID) apply(false)
+    id(Plugins.Path.JetBrainsKotlinAndroid) version(Plugins.Version.JETBRAINS_KOTLIN_ANDROID) apply(false)
+    id(Plugins.Path.DaggerHiltAndroid) version(Plugins.Version.DAGGER_HILT_ANDROID) apply(false)
 }
 
 tasks.register("clean", Delete::class){
