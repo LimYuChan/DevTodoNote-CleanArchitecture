@@ -35,4 +35,6 @@ dependencies {
     testImplementation(Dependencies.Test.Junit)
     androidTestImplementation(Dependencies.Test.TestExtJunit)
     androidTestImplementation(Dependencies.Test.TestEspressoCore)
+
+    implementation(Dependencies.Kotlin.Coroutine)
 }

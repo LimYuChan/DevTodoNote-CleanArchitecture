@@ -4,6 +4,9 @@ object Dependencies {
         const val AppCompat = "androidx.appcompat:appcompat:1.4.2"
         const val ConstraintLayout = "androidx.constraintlayout:constraintlayout:2.1.4"
     }
+    object Kotlin{
+        const val Coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9"
+    }
     object Google{
         const val AndroidMaterial = "com.google.android.material:material:1.6.1"
     }
