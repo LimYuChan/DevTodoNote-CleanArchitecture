@@ -21,4 +21,11 @@ object Dependencies {
         const val TestExtJunit = "androidx.test.ext:junit:$TEST_EXT_JUNIT_VERSION"
         const val TestEspressoCore = "androidx.test.espresso:espresso-core:$TEST_ESPRESSO_CORE_VERSION"
     }
+
+    object DaggerHilt{
+        private const val HILT_VERSION= "2.42"
+        const val HiltAndroid = "com.google.dagger:hilt-android:$HILT_VERSION"
+        const val HiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:$HILT_VERSION"
+    }
+
 }
