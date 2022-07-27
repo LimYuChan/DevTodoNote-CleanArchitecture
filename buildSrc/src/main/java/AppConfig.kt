@@ -1,5 +1,4 @@
-
-object AppConfig{
+object AppConfig {
     const val ApplicationId = "com.devsurfer.devtodonote_cleanarchitecture"
     const val CompileSdkVersion = 32
     const val MinSdkVersion = 27
