@@ -1,7 +1,9 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
+    id(Plugins.Path.AndroidLibrary)
+    id(Plugins.Path.JetBrainsKotlinAndroid)
+    id(Plugins.NameTag.KotlinKAPT)
+    id(Plugins.NameTag.KotlinParcelize)
+    id(Plugins.NameTag.DaggerHiltAndroid)
 }
 
 android {
@@ -41,4 +43,14 @@ dependencies {
 
     implementation(Dependencies.DaggerHilt.HiltAndroid)
     kapt(Dependencies.DaggerHilt.HiltAndroidCompiler)
+
+    implementation(Dependencies.RoomDataBase.Room)
+    kapt(Dependencies.RoomDataBase.RoomCompiler)
+
+    implementation(Dependencies.Retrofit.Retrofit)
+    implementation(Dependencies.Retrofit.RetrofitGsonConverter)
+
+    implementation(Dependencies.Okhttp.Okhttp)
+    implementation(Dependencies.Okhttp.LoggingInterceptor)
+    implementation(Dependencies.Okhttp.UrlConnection)
 }
