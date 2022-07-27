@@ -1,6 +1,9 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    id(Plugins.Path.AndroidLibrary)
+    id(Plugins.Path.JetBrainsKotlinAndroid)
+    id(Plugins.NameTag.KotlinKAPT)
+    id(Plugins.NameTag.KotlinParcelize)
+    id(Plugins.NameTag.DaggerHiltAndroid)
 }
 
 android {
@@ -31,11 +34,23 @@ android {
 }
 
 dependencies {
-
     implementation(project(":domain"))
 
     implementation(Dependencies.AndroidX.CoreKtx)
     testImplementation(Dependencies.Test.Junit)
     androidTestImplementation(Dependencies.Test.TestExtJunit)
     androidTestImplementation(Dependencies.Test.TestEspressoCore)
+
+    implementation(Dependencies.DaggerHilt.HiltAndroid)
+    kapt(Dependencies.DaggerHilt.HiltAndroidCompiler)
+
+    implementation(Dependencies.RoomDataBase.Room)
+    kapt(Dependencies.RoomDataBase.RoomCompiler)
+
+    implementation(Dependencies.Retrofit.Retrofit)
+    implementation(Dependencies.Retrofit.RetrofitGsonConverter)
+
+    implementation(Dependencies.Okhttp.Okhttp)
+    implementation(Dependencies.Okhttp.LoggingInterceptor)
+    implementation(Dependencies.Okhttp.UrlConnection)
 }
