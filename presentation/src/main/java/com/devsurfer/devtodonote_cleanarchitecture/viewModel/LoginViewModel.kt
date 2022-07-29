@@ -6,15 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devsurfer.data.BuildConfig
 import com.devsurfer.data.manager.PreferenceManager
-import com.devsurfer.domain.model.AuthToken
 import com.devsurfer.domain.state.Failure
 import com.devsurfer.domain.state.ResourceState
-import com.devsurfer.domain.useCase.GetAccessTokenUseCase
-import com.devsurfer.domain.util.Constants
+import com.devsurfer.domain.useCase.auth.GetAccessTokenUseCase
 import com.devsurfer.domain.util.StringUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject

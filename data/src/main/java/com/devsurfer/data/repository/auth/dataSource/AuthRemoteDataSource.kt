@@ -1,4 +1,4 @@
-package com.devsurfer.data.repository.auth.data_source
+package com.devsurfer.data.repository.auth.dataSource
 
 import com.devsurfer.data.di.RetrofitModule
 import com.devsurfer.data.extension.errorHandler

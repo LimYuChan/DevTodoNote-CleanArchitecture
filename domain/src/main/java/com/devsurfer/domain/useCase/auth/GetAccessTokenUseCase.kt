@@ -1,4 +1,4 @@
-package com.devsurfer.domain.useCase
+package com.devsurfer.domain.useCase.auth
 
 import com.devsurfer.domain.model.AuthToken
 import com.devsurfer.domain.repository.AuthRepository

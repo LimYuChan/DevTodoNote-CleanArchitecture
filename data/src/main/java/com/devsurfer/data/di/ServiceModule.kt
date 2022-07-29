@@ -1,6 +1,7 @@
 package com.devsurfer.data.di
 
 import com.devsurfer.data.service.AuthService
+import com.devsurfer.data.service.UserDataService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,4 +18,10 @@ object ServiceModule {
     @RetrofitModule.Auth
     fun provideAuthService(@RetrofitModule.Auth retrofit: Retrofit): AuthService =
         retrofit.create(AuthService::class.java)
+
+    @Singleton
+    @Provides
+    @RetrofitModule.Api
+    fun provideUserDataService(@RetrofitModule.Api retrofit: Retrofit): UserDataService =
+        retrofit.create(UserDataService::class.java)
 }

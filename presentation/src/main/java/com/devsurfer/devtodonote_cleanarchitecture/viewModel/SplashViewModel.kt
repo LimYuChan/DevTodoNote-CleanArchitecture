@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.devsurfer.data.manager.PreferenceManager
 import com.devsurfer.devtodonote_cleanarchitecture.BuildConfig
 import com.devsurfer.devtodonote_cleanarchitecture.state.ui.SplashUiState
+import com.devsurfer.domain.manager.UserDataManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
@@ -17,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    preferenceManager: PreferenceManager
+    preferenceManager: PreferenceManager,
+    private val userDataManager: UserDataManager
 ): ViewModel(){
 
     private var accessToken: String = ""
@@ -40,7 +42,11 @@ class SplashViewModel @Inject constructor(
             if(accessToken.isBlank()){
                 _authorizeState.emit(SplashUiState.UnAuthorizeUser)
             }else{
-                _authorizeState.emit(SplashUiState.AuthorizeUser)
+                if(userDataManager.getUser() != null){
+                    _authorizeState.emit(SplashUiState.AuthorizeUser)
+                }else{
+                    _authorizeState.emit(SplashUiState.UnAuthorizeUser)
+                }
             }
         }
     }
