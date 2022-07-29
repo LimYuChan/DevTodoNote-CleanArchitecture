@@ -1,3 +1,6 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import com.android.build.gradle.internal.scope.ProjectInfo.Companion.getBaseName
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -17,6 +20,11 @@ android {
         versionName = AppConfig.VersionName
 
         testInstrumentationRunner = AppConfig.TestInstrumentationRunner
+
+        buildConfigField("String", "GITHUB_CLIENT_ID", "\"${getLocalProperty("GITHUB_CLIENT_ID")}\"")
+        buildConfigField("String", "GITHUB_SECRET_KEY", "\"${getLocalProperty("GITHUB_SECRET_KEY")}\"")
+        buildConfigField("String", "GITHUB_REDIRECT_URL", "\"${getLocalProperty("GITHUB_REDIRECT_URL")}\"")
+
     }
 
     buildTypes {
@@ -58,6 +66,9 @@ dependencies {
     implementation(Dependencies.Kotlin.Coroutine)
 
     implementation(Dependencies.Google.AndroidMaterial)
+    implementation("androidx.appcompat:appcompat:1.4.2")
+    implementation("com.google.android.material:material:1.4.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     testImplementation(Dependencies.Test.Junit)
     androidTestImplementation(Dependencies.Test.TestExtJunit)
@@ -72,6 +83,8 @@ dependencies {
     annotationProcessor(Dependencies.Glide.GlideCompiler)
 
     implementation(Dependencies.Permission.TedPermission)
+}
 
-
+fun getLocalProperty(key: String): String{
+    return gradleLocalProperties(rootDir).getProperty(key)
 }
