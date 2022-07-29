@@ -3,14 +3,14 @@ package com.devsurfer.data.extension
 import android.content.SharedPreferences
 
 object Preference {
-    private inline fun SharedPreferences.edit(operation: (SharedPreferences.Editor) -> Unit){
+    private inline fun SharedPreferences.edit(operation: (SharedPreferences.Editor) -> Unit): Boolean{
         val editor = this.edit()
         operation(editor)
-        editor.apply()
+        return editor.commit()
     }
 
-    operator fun SharedPreferences.set(key: String, value: Any?){
-        when(value){
+    operator fun SharedPreferences.set(key: String, value: Any?): Boolean{
+        return when(value){
             is String? -> edit { it.putString(key, value) }
             is Int -> edit { it.putInt(key, value) }
             is Boolean -> edit { it.putBoolean(key, value) }

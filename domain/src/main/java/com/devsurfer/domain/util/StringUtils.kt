@@ -1,4 +1,4 @@
-package com.devsurfer.domain.utils
+package com.devsurfer.domain.util
 
 object StringUtils {
     fun getRandomString(length: Int): String {

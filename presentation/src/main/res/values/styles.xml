@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TabItemTextStyle" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/montserrat_alternates_regular</item>
+    </style>
+
+    <style name="StandardAppBarTitleStyle" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/header_medium</item>
+        <item name="android:fontFamily">@font/montserrat_alternates_bold</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="AppBarTitleSmallStyle" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/title_small</item>
+        <item name="android:fontFamily">@font/montserrat_alternates_bold</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+    <style name="AppBarMenuTextStyle" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <item name="android:textSize">@dimen/body</item>
+        <item name="android:fontFamily">@font/montserrat_alternates_regular</item>
+    </style>
+</resources>

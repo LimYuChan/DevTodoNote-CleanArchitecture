@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background">#1F1D2B</color>
+    <color name="auth_icon_color">#1F1D2B</color>
+    <color name="point_button_color">@color/white</color>
+</resources>

@@ -1,4 +1,4 @@
-package com.devsurfer.domain.utils
+package com.devsurfer.domain.util
 
 import java.util.*
 

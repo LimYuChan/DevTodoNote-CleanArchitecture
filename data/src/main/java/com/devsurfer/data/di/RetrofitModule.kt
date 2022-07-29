@@ -2,10 +2,8 @@ package com.devsurfer.data.di
 
 import com.devsurfer.data.BuildConfig
 import com.devsurfer.data.manager.PreferenceManager
-import com.devsurfer.data.utils.GithubApiInterceptor
-import com.google.gson.Gson
+import com.devsurfer.data.util.GithubApiInterceptor
 import com.google.gson.GsonBuilder
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

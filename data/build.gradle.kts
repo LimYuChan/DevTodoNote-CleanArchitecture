@@ -15,13 +15,17 @@ android {
 
         testInstrumentationRunner = AppConfig.TestInstrumentationRunner
         consumerProguardFiles(AppConfig.ConsumerProguardRules)
+
+        buildConfigField("String", "GITHUB_CLIENT_ID", "\"${getLocalProperty("GITHUB_CLIENT_ID")}\"")
+        buildConfigField("String", "GITHUB_SECRET_KEY", "\"${getLocalProperty("GITHUB_SECRET_KEY")}\"")
+        buildConfigField("String", "GITHUB_REDIRECT_URL", "\"${getLocalProperty("GITHUB_REDIRECT_URL")}\"")
+
     }
 
     buildTypes {
         getByName("release"){
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile(AppConfig.DefaultProguardFile), AppConfig.ProguardRules)
-
         }
     }
     compileOptions {
@@ -53,4 +57,7 @@ dependencies {
     implementation(Dependencies.Okhttp.Okhttp)
     implementation(Dependencies.Okhttp.LoggingInterceptor)
     implementation(Dependencies.Okhttp.UrlConnection)
+}
+fun getLocalProperty(key: String): String{
+    return com.android.build.gradle.internal.cxx.configure.gradleLocalProperties(rootDir).getProperty(key)
 }

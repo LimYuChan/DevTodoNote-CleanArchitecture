@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">DevTodoNote-CleanArchitecture</string>
+    <string name="app_name">DevTodoNote_CleanArchitecture</string>
+    <string name="guide_description">개발을 조금 더 계획적으로\n진행할 수 있도록 도와주는 앱 입니다.</string>
+    <string name="github_login">Github로 로그인하기</string>
 </resources>
