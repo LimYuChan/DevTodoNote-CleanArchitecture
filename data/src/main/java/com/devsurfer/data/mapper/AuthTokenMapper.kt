@@ -1,7 +1,7 @@
 package com.devsurfer.data.mapper
 
 import com.devsurfer.data.model.AuthTokenResponse
-import com.devsurfer.domain.model.AuthToken
+import com.devsurfer.domain.model.auth.AuthToken
 
 object AuthTokenMapper{
     fun mapperToAuthToken(response: AuthTokenResponse): AuthToken =

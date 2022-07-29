@@ -3,6 +3,7 @@ plugins {
     id(Plugins.Path.JetBrainsKotlinAndroid)
     id(Plugins.NameTag.KotlinKAPT)
     id(Plugins.NameTag.DaggerHiltAndroid)
+    id(Plugins.NameTag.KotlinParcelize)
 }
 
 android {

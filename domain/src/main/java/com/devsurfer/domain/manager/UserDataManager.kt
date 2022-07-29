@@ -1,6 +1,6 @@
 package com.devsurfer.domain.manager
 
-import com.devsurfer.domain.model.User
+import com.devsurfer.domain.model.userData.User
 import com.devsurfer.domain.state.ResourceState
 import com.devsurfer.domain.useCase.userData.GetUserDataUseCase
 import kotlinx.coroutines.async

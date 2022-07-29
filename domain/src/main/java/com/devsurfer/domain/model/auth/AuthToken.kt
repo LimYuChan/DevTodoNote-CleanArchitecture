@@ -1,4 +1,4 @@
-package com.devsurfer.domain.model
+package com.devsurfer.domain.model.auth
 
 data class AuthToken(
     val accessToken: String,

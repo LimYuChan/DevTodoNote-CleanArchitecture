@@ -48,22 +48,24 @@ class LoginViewModel @Inject constructor(
     fun validateLoginStateKey(state: String): Boolean = loginStateKey == state
 
     fun getAccessToken(code: String){
-        useCase(code = code).onEach {
-            when(it){
-                is ResourceState.Success->{
-                    updateAccessToken(it.data.accessToken)
+        if(preferenceManager.clear()){
+            useCase(code = code).onEach {
+                when(it){
+                    is ResourceState.Success->{
+                        updateAccessToken(it.data.accessToken)
+                    }
+                    is ResourceState.Error->{
+                        _loginState.emit(ResourceState.Error(failure = it.failure))
+                    }
+                    else->{
+                        _loginState.emit(ResourceState.Loading())
+                    }
                 }
-                is ResourceState.Error->{
-                    _loginState.emit(ResourceState.Error(failure = it.failure))
-                }
-                else->{
-                    _loginState.emit(ResourceState.Loading())
-                }
-            }
-        }.catch { exception ->
-            Log.e(TAG, "casedBy: ${exception.message}")
-            _loginState.emit(ResourceState.Error(failure = Failure.UnHandleError(exception.message ?: "")))
-        }.launchIn(viewModelScope)
+            }.catch { exception ->
+                Log.e(TAG, "casedBy: ${exception.message}")
+                _loginState.emit(ResourceState.Error(failure = Failure.UnHandleError(exception.message ?: "")))
+            }.launchIn(viewModelScope)
+        }
     }
 
     private fun updateAccessToken(accessToken: String){

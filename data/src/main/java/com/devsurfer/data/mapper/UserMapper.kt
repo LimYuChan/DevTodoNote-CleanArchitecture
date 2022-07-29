@@ -1,7 +1,7 @@
 package com.devsurfer.data.mapper
 
 import com.devsurfer.data.model.UserResponse
-import com.devsurfer.domain.model.User
+import com.devsurfer.domain.model.userData.User
 
 object UserMapper {
     fun mapperToUser(response: UserResponse): User =

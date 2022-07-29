@@ -2,11 +2,10 @@ package com.devsurfer.data.repository.userData.dataSource
 
 import com.devsurfer.data.di.RetrofitModule
 import com.devsurfer.data.extension.errorHandler
-import com.devsurfer.data.mapper.AuthTokenMapper
 import com.devsurfer.data.mapper.UserMapper
 import com.devsurfer.data.service.UserDataService
 import com.devsurfer.data.state.ResponseErrorState
-import com.devsurfer.domain.model.User
+import com.devsurfer.domain.model.userData.User
 import com.devsurfer.domain.state.ResourceState
 import javax.inject.Inject
 

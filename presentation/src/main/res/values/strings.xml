@@ -2,4 +2,15 @@
     <string name="app_name">DevTodoNote_CleanArchitecture</string>
     <string name="guide_description">개발을 조금 더 계획적으로\n진행할 수 있도록 도와주는 앱 입니다.</string>
     <string name="github_login">Github로 로그인하기</string>
+
+    <string name="app_bar_title">Dev Todo Notes</string>
+
+    <string name="action_menu_search">Search</string>
+    <string name="action_menu_more">More</string>
+
+    <string name="plz_select_repository">작업 메모를 남길 repository를 선택해주세요,</string>
+
+    <string name="repo_public">Public</string>
+    <string name="repo_private">Private</string>
+    <string name="repo_default_branch">Default branch</string>
 </resources>

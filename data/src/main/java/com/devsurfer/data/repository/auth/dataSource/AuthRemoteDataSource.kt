@@ -5,7 +5,7 @@ import com.devsurfer.data.extension.errorHandler
 import com.devsurfer.data.mapper.AuthTokenMapper
 import com.devsurfer.data.service.AuthService
 import com.devsurfer.data.state.ResponseErrorState
-import com.devsurfer.domain.model.AuthToken
+import com.devsurfer.domain.model.auth.AuthToken
 import com.devsurfer.domain.state.ResourceState
 import javax.inject.Inject
 

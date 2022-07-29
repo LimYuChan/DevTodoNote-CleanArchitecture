@@ -1,4 +1,4 @@
-package com.devsurfer.domain.model
+package com.devsurfer.domain.model.userData
 
 data class User(
     val id: Int,
