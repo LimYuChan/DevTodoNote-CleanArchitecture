@@ -1,7 +1,5 @@
-package com.devsurfer.data.utils
+package com.devsurfer.data.util
 
-import android.content.Context
-import com.devsurfer.data.extension.Preference.get
 import com.devsurfer.data.manager.PreferenceManager
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -13,7 +11,11 @@ class GithubApiInterceptor @Inject constructor(
 
     private val accessToken: String
     init {
-        accessToken = preferenceManager.getAccessToken()
+        accessToken = try{
+            preferenceManager.getAccessToken()
+        }catch (e: UnsupportedOperationException){
+            ""
+        }
     }
     override fun intercept(chain: Interceptor.Chain): Response =
         if(accessToken.isBlank()){

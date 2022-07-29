@@ -19,6 +19,8 @@ object Dependencies {
         const val ActivityKtx = "androidx.activity:activity-ktx:$VIEW_KTX_VERSION"
 
         const val SwipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
+        const val Browser = "androidx.browser:browser:1.4.0"
     }
     object Kotlin{
         const val Coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9"

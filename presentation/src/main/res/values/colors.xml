@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="primary">#6F6FC8</color>
+    <color name="background">@color/white</color>
+    <color name="check_indicator">#32a7e2</color>
+    <color name="tab_indicator_color">#ffbf47</color>
+    <color name="icon_color">#4C4857</color>
+    <color name="auth_icon_color">@color/white</color>
+    <color name="point_button_color">#1F1D2B</color>
+    <color name="progress_background_color">#40000000</color>
+    <color name="repo_public_color">#48bb78</color>
+    <color name="standard_divider_color">#f8f8f8</color>
 </resources>
