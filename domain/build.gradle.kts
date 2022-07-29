@@ -1,6 +1,8 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    id(Plugins.Path.AndroidLibrary)
+    id(Plugins.Path.JetBrainsKotlinAndroid)
+    id(Plugins.NameTag.KotlinKAPT)
+    id(Plugins.NameTag.DaggerHiltAndroid)
 }
 
 android {
@@ -37,4 +39,7 @@ dependencies {
     androidTestImplementation(Dependencies.Test.TestEspressoCore)
 
     implementation(Dependencies.Kotlin.Coroutine)
+
+    implementation(Dependencies.DaggerHilt.HiltAndroid)
+    kapt(Dependencies.DaggerHilt.HiltAndroidCompiler)
 }
