@@ -1,7 +1,7 @@
 package com.devsurfer.data.repository.auth
 
-import com.devsurfer.data.repository.auth.data_source.AuthRemoteDataSource
-import com.devsurfer.domain.model.AuthToken
+import com.devsurfer.data.repository.auth.dataSource.AuthRemoteDataSource
+import com.devsurfer.domain.model.auth.AuthToken
 import com.devsurfer.domain.repository.AuthRepository
 import com.devsurfer.domain.state.ResourceState
 import javax.inject.Inject

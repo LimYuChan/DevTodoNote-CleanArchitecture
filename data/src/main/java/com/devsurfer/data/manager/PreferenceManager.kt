@@ -2,6 +2,7 @@ package com.devsurfer.data.manager
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import com.devsurfer.data.extension.Preference.get
 import com.devsurfer.data.extension.Preference.set
 import com.devsurfer.domain.util.Constants
@@ -19,4 +20,6 @@ class PreferenceManager @Inject constructor(
     fun getAccessToken(): String = preference[Constants.PREFERENCE_KEY_ACCESS_TOKEN, ""]
 
     fun updateAccessToken(accessToken: String): Boolean = preference.set(Constants.PREFERENCE_KEY_ACCESS_TOKEN, accessToken)
+
+    fun clear():Boolean = preference.edit().clear().commit()
 }

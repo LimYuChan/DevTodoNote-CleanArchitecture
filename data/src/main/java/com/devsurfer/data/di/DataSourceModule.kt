@@ -1,7 +1,9 @@
 package com.devsurfer.data.di
 
-import com.devsurfer.data.repository.auth.data_source.AuthRemoteDataSource
+import com.devsurfer.data.repository.auth.dataSource.AuthRemoteDataSource
+import com.devsurfer.data.repository.userData.dataSource.UserDataRemoteDataSource
 import com.devsurfer.data.service.AuthService
+import com.devsurfer.data.service.UserDataService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,4 +19,10 @@ object DataSourceModule {
     @RetrofitModule.Auth
     fun provideAuthDataSource(@RetrofitModule.Auth service: AuthService): AuthRemoteDataSource =
         AuthRemoteDataSource(service = service)
+
+    @Singleton
+    @Provides
+    @RetrofitModule.Api
+    fun provideUserDataSource(@RetrofitModule.Api service: UserDataService): UserDataRemoteDataSource =
+        UserDataRemoteDataSource(service = service)
 }
