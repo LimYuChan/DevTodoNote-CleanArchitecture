@@ -6,15 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devsurfer.data.BuildConfig
 import com.devsurfer.data.manager.PreferenceManager
-import com.devsurfer.domain.model.AuthToken
 import com.devsurfer.domain.state.Failure
 import com.devsurfer.domain.state.ResourceState
-import com.devsurfer.domain.useCase.GetAccessTokenUseCase
-import com.devsurfer.domain.util.Constants
+import com.devsurfer.domain.useCase.auth.GetAccessTokenUseCase
 import com.devsurfer.domain.util.StringUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -52,22 +48,24 @@ class LoginViewModel @Inject constructor(
     fun validateLoginStateKey(state: String): Boolean = loginStateKey == state
 
     fun getAccessToken(code: String){
-        useCase(code = code).onEach {
-            when(it){
-                is ResourceState.Success->{
-                    updateAccessToken(it.data.accessToken)
+        if(preferenceManager.clear()){
+            useCase(code = code).onEach {
+                when(it){
+                    is ResourceState.Success->{
+                        updateAccessToken(it.data.accessToken)
+                    }
+                    is ResourceState.Error->{
+                        _loginState.emit(ResourceState.Error(failure = it.failure))
+                    }
+                    else->{
+                        _loginState.emit(ResourceState.Loading())
+                    }
                 }
-                is ResourceState.Error->{
-                    _loginState.emit(ResourceState.Error(failure = it.failure))
-                }
-                else->{
-                    _loginState.emit(ResourceState.Loading())
-                }
-            }
-        }.catch { exception ->
-            Log.e(TAG, "casedBy: ${exception.message}")
-            _loginState.emit(ResourceState.Error(failure = Failure.UnHandleError(exception.message ?: "")))
-        }.launchIn(viewModelScope)
+            }.catch { exception ->
+                Log.e(TAG, "casedBy: ${exception.message}")
+                _loginState.emit(ResourceState.Error(failure = Failure.UnHandleError(exception.message ?: "")))
+            }.launchIn(viewModelScope)
+        }
     }
 
     private fun updateAccessToken(accessToken: String){

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="repo"
+            type="com.devsurfer.domain.model.userData.UserRepository" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_root"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:selectableItemBackground"
+        android:paddingHorizontal="@dimen/standard_horizontal_margin"
+        android:paddingTop="@dimen/medium_spacer">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_repo_name"
+            android:text="@{repo.name}"
+            android:textSize="@dimen/title_small"
+            android:textColor="?android:textColorPrimary"
+            android:fontFamily="@font/montserrat_alternates_bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginEnd="4dp"
+            android:paddingBottom="4dp"
+            tools:text="demo view repository name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_repo_access"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_repo_description"
+            android:text="@{repo.description}"
+            android:textSize="@dimen/caption"
+            android:textColor="?android:textColorPrimary"
+            android:alpha=".8"
+            android:fontFamily="@font/montserrat_alternates_regular"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:layout_marginEnd="4dp"
+            android:visibility="@{repo.description == null ? View.GONE : View.VISIBLE}"
+            tools:text = "demo view repository description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_repo_access"
+            app:layout_constraintTop_toBottomOf="@id/tv_repo_name"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_repo_access"
+            android:text="@{repo.private == true ? @string/repo_private : @string/repo_public}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/body"
+            android:fontFamily="@font/montserrat_alternates_regular"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="4dp"
+            android:background="@drawable/solid_rectangle_corner_12"
+            tools:text="@string/repo_private"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_repo_language"
+            android:text="@{repo.language}"
+            android:textSize="@dimen/caption"
+            android:textColor="?android:textColorPrimary"
+            android:alpha=".8"
+            android:fontFamily="@font/montserrat_alternates_regular"
+            android:drawablePadding="4dp"
+            android:textAlignment="gravity"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp"
+            android:paddingEnd="4dp"
+            android:visibility="@{repo.language == null ? View.GONE : View.VISIBLE}"
+            tools:text="kotlin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_repo_description"
+            app:drawableStartCompat="@drawable/oval_language" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_repo_default_branch_title"
+            android:text="@string/repo_default_branch"
+            android:textSize="@dimen/caption"
+            android:textColor="?android:textColorPrimary"
+            android:fontFamily="@font/montserrat_alternates_regular"
+            app:layout_constraintStart_toEndOf="@id/tv_repo_language"
+            app:layout_constraintTop_toTopOf="@id/tv_repo_language"
+            app:layout_constraintBottom_toBottomOf="@id/tv_repo_language"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_repo_default_branch"
+            android:text="@{repo.defaultBranch}"
+            android:textSize="@dimen/caption"
+            android:textColor="?android:textColorPrimary"
+            android:alpha=".8"
+            android:fontFamily="@font/montserrat_alternates_bold"
+            android:layout_marginStart="4dp"
+            tools:text="main"
+            app:layout_constraintStart_toEndOf="@id/tv_repo_default_branch_title"
+            app:layout_constraintTop_toTopOf="@id/tv_repo_language"
+            app:layout_constraintBottom_toBottomOf="@id/tv_repo_language"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_repo_updated_at"
+            tools:text = "6분전 마지막 업데이트"
+            android:textSize="@dimen/caption"
+            android:textColor="?android:textColorPrimary"
+            android:fontFamily="@font/montserrat_alternates_bold"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_repo_language"/>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/medium_spacer"
+            app:dividerColor="@color/standard_divider_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_repo_updated_at"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
