@@ -1,5 +1,6 @@
 package com.devsurfer.devtodonote_cleanarchitecture.base
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,17 +9,13 @@ import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
-import com.devsurfer.devtodonote_cleanarchitecture.extension.errorHandler
-import com.devsurfer.domain.state.Failure
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-abstract class BaseFragment<T: ViewDataBinding>(
-    @LayoutRes val layoutRes: Int
-): Fragment(){
+abstract class BaseBottomSheet<T: ViewDataBinding>(
+    @LayoutRes val layoutResource: Int
+): BottomSheetDialogFragment(){
 
     protected lateinit var binding: T
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,13 +27,12 @@ abstract class BaseFragment<T: ViewDataBinding>(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, layoutRes, container, false)
+        binding = DataBindingUtil.inflate(inflater, layoutResource, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.lifecycleOwner = this.viewLifecycleOwner
         initUI()
     }
 
@@ -49,28 +45,21 @@ abstract class BaseFragment<T: ViewDataBinding>(
     abstract fun initUI()
     abstract fun initListener()
 
-
-    fun showShortToast(message: String?){
-        context?.let {
-            Toast.makeText(it, message ?: "", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    fun showLongToast(message: String?){
-        context?.let {
-            Toast.makeText(it, message ?: "", Toast.LENGTH_LONG).show()
-        }
-    }
-
-    fun onBackPress(){
+    protected fun showShortToast(message: String?){
         if(activity != null && isAdded){
-            requireActivity().onBackPressed()
+            Toast.makeText(context, message ?: "", Toast.LENGTH_SHORT).show()
         }
     }
 
-    fun errorHandler(failure: Failure?){
+    protected fun showLongToast(message: String?){
         if(activity != null && isAdded){
-            requireActivity().errorHandler(failure)
+            Toast.makeText(context, message ?: "", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun dismiss() {
+        if(activity != null && isAdded){
+            super.dismiss()
         }
     }
 }

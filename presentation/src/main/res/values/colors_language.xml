@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="kotlin_color">#A97BFF</color>
+    <color name="java_color">#b07219</color>
+    <color name="java_script_color">#f1e05a</color>
+    <color name="swift_color">#F05138</color>
+    <color name="html_color">#e34c26</color>
+    <color name="css_color">#563d7c</color>
+    <color name="php_color">#4F5D95</color>
+    <color name="python_color">#3572A5</color>
+    <color name="vue_color">#41b883</color>
+    <color name="c_color">#555555</color>
+    <color name="c_hash_color">#178600</color>
+    <color name="c_2plus_color">#f34b7d</color>
+    <color name="ruby_color">#701516</color>
+    <color name="dart_color">#00B4AB</color>
+    <color name="language_default_color">#814CCC</color>
+</resources>
