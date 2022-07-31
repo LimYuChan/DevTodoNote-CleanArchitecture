@@ -4,6 +4,7 @@ import com.devsurfer.domain.enums.TodoState
 import com.devsurfer.domain.model.note.Note
 import com.devsurfer.domain.repository.note.NoteRepository
 import com.devsurfer.domain.state.ResourceState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
