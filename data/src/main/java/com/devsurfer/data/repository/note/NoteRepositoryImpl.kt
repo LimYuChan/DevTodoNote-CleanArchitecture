@@ -12,8 +12,13 @@ class NoteRepositoryImpl @Inject constructor(
     override suspend fun getNotes(): List<Note> =
         dao.getNotes().map { NoteMapper.mapperToModel(it) }
 
-    override suspend fun getNotesByRepositoryId(repositoryId: Int): List<Note> =
-        dao.getNotesByRepositoryId(repositoryId = repositoryId).map { NoteMapper.mapperToModel(it) }
+    override suspend fun getNotesByRepositoryId(repositoryId: Int): List<Note> = dao.getNotesByRepositoryId(repositoryId = repositoryId).map { NoteMapper.mapperToModel(it) }
+
+    override suspend fun getTodoNotesByRepositoryId(repositoryId: Int): List<Note> =
+        dao.getTodoNotesByRepositoryId(repositoryId = repositoryId).map { NoteMapper.mapperToModel(it) }
+
+    override suspend fun getDoneNotesByRepositoryId(repositoryId: Int): List<Note> =
+        dao.getDoneNotesByRepositoryId(repositoryId = repositoryId).map { NoteMapper.mapperToModel(it) }
 
     override suspend fun getNote(contentId: Long): Note?{
         val note = dao.getNote(contentId = contentId)
