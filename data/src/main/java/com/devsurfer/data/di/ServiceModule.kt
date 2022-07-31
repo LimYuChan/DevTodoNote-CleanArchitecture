@@ -1,7 +1,7 @@
 package com.devsurfer.data.di
 
-import com.devsurfer.data.service.AuthService
-import com.devsurfer.data.service.UserDataService
+import com.devsurfer.data.service.auth.AuthService
+import com.devsurfer.data.service.userData.UserDataService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

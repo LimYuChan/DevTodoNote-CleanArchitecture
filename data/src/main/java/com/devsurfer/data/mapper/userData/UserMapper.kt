@@ -1,10 +1,10 @@
-package com.devsurfer.data.mapper
+package com.devsurfer.data.mapper.userData
 
-import com.devsurfer.data.model.UserResponse
+import com.devsurfer.data.model.userData.UserResponse
 import com.devsurfer.domain.model.userData.User
 
 object UserMapper {
-    fun mapperToUser(response: UserResponse): User =
+    fun mapperToModel(response: UserResponse): User =
         User(
             id = response.id,
             email = response.email,
@@ -16,7 +16,7 @@ object UserMapper {
             htmlUrl = response.html_url
         )
 
-    fun mapperToUserResponse(user: User): UserResponse =
+    fun mapperToResponse(user: User): UserResponse =
         UserResponse(
             id = user.id,
             email = user.email,

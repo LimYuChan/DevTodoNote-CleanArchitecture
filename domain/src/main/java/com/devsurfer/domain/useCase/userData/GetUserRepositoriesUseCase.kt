@@ -1,7 +1,7 @@
 package com.devsurfer.domain.useCase.userData
 
 import com.devsurfer.domain.model.userData.UserRepository
-import com.devsurfer.domain.repository.UserDataRepository
+import com.devsurfer.domain.repository.userData.UserDataRepository
 import com.devsurfer.domain.state.ResourceState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

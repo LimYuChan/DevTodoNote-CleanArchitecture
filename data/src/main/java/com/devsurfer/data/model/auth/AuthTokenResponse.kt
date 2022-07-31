@@ -1,4 +1,4 @@
-package com.devsurfer.data.model
+package com.devsurfer.data.model.auth
 
 data class AuthTokenResponse(
     val access_token: String,
