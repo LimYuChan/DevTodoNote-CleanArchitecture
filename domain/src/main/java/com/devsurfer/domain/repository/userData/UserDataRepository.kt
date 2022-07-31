@@ -1,4 +1,4 @@
-package com.devsurfer.domain.repository
+package com.devsurfer.domain.repository.userData
 
 import com.devsurfer.domain.model.userData.User
 import com.devsurfer.domain.model.userData.UserRepository

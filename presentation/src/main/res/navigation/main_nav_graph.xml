@@ -7,5 +7,30 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.devsurfer.devtodonote_cleanarchitecture.ui.fragment.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_todoListWrapperFragment"
+            app:destination="@id/todoListWrapperFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/todoListWrapperFragment"
+        android:name="com.devsurfer.devtodonote_cleanarchitecture.ui.fragment.TodoListWrapperFragment"
+        android:label="TodoListWrapperFragment" >
+        <argument
+            android:name="item_user_repository"
+            app:argType="com.devsurfer.domain.model.userData.UserRepository" />
+        <action
+            android:id="@+id/action_todoListWrapperFragment_to_createNoteFragment"
+            app:destination="@id/createNoteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createNoteFragment"
+        android:name="com.devsurfer.devtodonote_cleanarchitecture.ui.fragment.CreateNoteFragment"
+        android:label="CreateNoteFragment" >
+        <argument
+            android:name="item_note"
+            app:argType="com.devsurfer.domain.model.note.Note"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 </navigation>

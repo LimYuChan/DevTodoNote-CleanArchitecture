@@ -1,11 +1,11 @@
-package com.devsurfer.data.mapper
+package com.devsurfer.data.mapper.userData
 
-import com.devsurfer.data.model.UserRepositoryResponse
+import com.devsurfer.data.model.userData.UserRepositoryResponse
 import com.devsurfer.domain.model.userData.UserRepository
 
 object UserRepositoryMapper {
 
-    fun mapperToUserRepository(response: UserRepositoryResponse): UserRepository =
+    fun mapperToModel(response: UserRepositoryResponse): UserRepository =
         UserRepository(
             id = response.id,
             name = response.name,
@@ -18,7 +18,7 @@ object UserRepositoryMapper {
             defaultBranch = response.default_branch
         )
 
-    fun mapperToUserRepositoryResponse(userRepository: UserRepository): UserRepositoryResponse =
+    fun mapperToResponse(userRepository: UserRepository): UserRepositoryResponse =
         UserRepositoryResponse(
             id = userRepository.id,
             name = userRepository.name,

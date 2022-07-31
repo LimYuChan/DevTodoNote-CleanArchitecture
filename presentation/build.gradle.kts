@@ -1,9 +1,7 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-import com.android.build.gradle.internal.scope.ProjectInfo.Companion.getBaseName
-
 plugins {
     id(Plugins.Path.AndroidApplication)
     id(Plugins.Path.JetBrainsKotlinAndroid)
+    id(Plugins.Path.NavigationSafeArgs)
     id(Plugins.NameTag.KotlinKAPT)
     id(Plugins.NameTag.KotlinParcelize)
     id(Plugins.NameTag.DaggerHiltAndroid)

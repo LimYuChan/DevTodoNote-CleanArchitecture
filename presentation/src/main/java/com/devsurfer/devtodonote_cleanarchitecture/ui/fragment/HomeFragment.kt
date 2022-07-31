@@ -1,8 +1,10 @@
 package com.devsurfer.devtodonote_cleanarchitecture.ui.fragment
 
 import android.util.Log
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devsurfer.devtodonote_cleanarchitecture.R
 import com.devsurfer.devtodonote_cleanarchitecture.adapter.UserRepositoryAdapter
@@ -20,7 +22,10 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private val viewModel: HomeViewModel by viewModels()
 
     private val adapter = UserRepositoryAdapter{
-
+        val action = HomeFragmentDirections.actionHomeFragmentToTodoListWrapperFragment(it)
+        view?.let { view->
+            Navigation.findNavController(view).navigate(action)
+        }
     }
 
     override fun initData() {
@@ -52,22 +57,27 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                     is ResourceState.Error->{
                         errorHandler(it.failure)
                     }
-                    else -> {}
+                    else->{
+
+                    }
                 }
             }
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenResumed { 
             viewModel.repositories.collectLatest {
+                Log.d(TAG, "initListener: $it")
                 when(it){
                     is ResourceState.Success->{
+                        binding.layoutLoadingProgress.root.visibility = View.GONE
                         adapter.submitList(it.data)
                     }
                     is ResourceState.Error->{
+                        binding.layoutLoadingProgress.root.visibility = View.GONE
                         errorHandler(it.failure)
                     }
                     else->{
-                        
+                        binding.layoutLoadingProgress.root.visibility = View.VISIBLE
                     }
                 }
                 binding.swipeRefreshLayout.isRefreshing = false

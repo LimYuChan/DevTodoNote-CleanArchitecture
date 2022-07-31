@@ -2,8 +2,8 @@ package com.devsurfer.data.repository.auth.dataSource
 
 import com.devsurfer.data.di.RetrofitModule
 import com.devsurfer.data.extension.errorHandler
-import com.devsurfer.data.mapper.AuthTokenMapper
-import com.devsurfer.data.service.AuthService
+import com.devsurfer.data.mapper.auth.AuthTokenMapper
+import com.devsurfer.data.service.auth.AuthService
 import com.devsurfer.data.state.ResponseErrorState
 import com.devsurfer.domain.model.auth.AuthToken
 import com.devsurfer.domain.state.ResourceState
@@ -15,7 +15,7 @@ class AuthRemoteDataSource @Inject constructor(
     suspend fun getAccessToken(code: String): ResourceState<AuthToken>{
         return when(val response = service.getAccessToken(code = code).errorHandler()){
             is ResponseErrorState.Success ->
-                ResourceState.Success(data = AuthTokenMapper.mapperToAuthToken(response.data))
+                ResourceState.Success(data = AuthTokenMapper.mapperToModel(response.data))
             is ResponseErrorState.Error->{
                 ResourceState.Error(failure = response.failure)
             }

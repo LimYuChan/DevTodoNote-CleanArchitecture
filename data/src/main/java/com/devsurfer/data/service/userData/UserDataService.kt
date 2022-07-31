@@ -1,7 +1,7 @@
-package com.devsurfer.data.service
+package com.devsurfer.data.service.userData
 
-import com.devsurfer.data.model.UserRepositoryResponse
-import com.devsurfer.data.model.UserResponse
+import com.devsurfer.data.model.userData.UserRepositoryResponse
+import com.devsurfer.data.model.userData.UserResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

@@ -33,16 +33,16 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(R.layout.activity_login)
             viewModel.loginState.collectLatest {
                 when(it){
                     is ResourceState.Success->{
-                        binding.layoutProgress.visibility = View.GONE
+                        binding.layoutLoadingProgress.root.visibility = View.GONE
                         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                         finish()
                     }
                     is ResourceState.Error->{
-                        binding.layoutProgress.visibility = View.GONE
+                        binding.layoutLoadingProgress.root.visibility = View.GONE
                         showShortToast(it.failure.message)
                     }
                     else ->{
-                        binding.layoutProgress.visibility = View.VISIBLE
+                        binding.layoutLoadingProgress.root.visibility = View.VISIBLE
                     }
                 }
             }
