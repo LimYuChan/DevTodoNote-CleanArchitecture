@@ -1,7 +1,7 @@
 package com.devsurfer.domain.useCase.auth
 
 import com.devsurfer.domain.model.auth.AuthToken
-import com.devsurfer.domain.repository.AuthRepository
+import com.devsurfer.domain.repository.auth.AuthRepository
 import com.devsurfer.domain.state.ResourceState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

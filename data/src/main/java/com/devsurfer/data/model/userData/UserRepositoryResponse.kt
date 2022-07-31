@@ -1,4 +1,4 @@
-package com.devsurfer.data.model
+package com.devsurfer.data.model.userData
 
 data class UserRepositoryResponse(
     val id: Int,

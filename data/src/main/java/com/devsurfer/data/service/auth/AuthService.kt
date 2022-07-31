@@ -1,7 +1,7 @@
-package com.devsurfer.data.service
+package com.devsurfer.data.service.auth
 
 import com.devsurfer.data.BuildConfig
-import com.devsurfer.data.model.AuthTokenResponse
+import com.devsurfer.data.model.auth.AuthTokenResponse
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded

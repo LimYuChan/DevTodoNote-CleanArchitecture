@@ -1,10 +1,10 @@
-package com.devsurfer.data.mapper
+package com.devsurfer.data.mapper.auth
 
-import com.devsurfer.data.model.AuthTokenResponse
+import com.devsurfer.data.model.auth.AuthTokenResponse
 import com.devsurfer.domain.model.auth.AuthToken
 
 object AuthTokenMapper{
-    fun mapperToAuthToken(response: AuthTokenResponse): AuthToken =
+    fun mapperToModel(response: AuthTokenResponse): AuthToken =
         AuthToken(
             accessToken = response.access_token,
             expiresIn = response.expires_in,
@@ -14,7 +14,7 @@ object AuthTokenMapper{
             tokenType = response.token_type
         )
 
-    fun mapperToAuthTokenResponse(authToken: AuthToken): AuthTokenResponse =
+    fun mapperToResponse(authToken: AuthToken): AuthTokenResponse =
         AuthTokenResponse(
             access_token = authToken.accessToken,
             expires_in = authToken.expiresIn,
