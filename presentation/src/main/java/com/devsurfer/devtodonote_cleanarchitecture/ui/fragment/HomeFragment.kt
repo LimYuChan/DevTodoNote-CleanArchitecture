@@ -3,6 +3,7 @@ package com.devsurfer.devtodonote_cleanarchitecture.ui.fragment
 import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devsurfer.devtodonote_cleanarchitecture.R
 import com.devsurfer.devtodonote_cleanarchitecture.adapter.UserRepositoryAdapter
@@ -20,7 +21,10 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private val viewModel: HomeViewModel by viewModels()
 
     private val adapter = UserRepositoryAdapter{
-
+        val action = HomeFragmentDirections.actionHomeFragmentToTodoListWrapperFragment(it)
+        view?.let { view->
+            Navigation.findNavController(view).navigate(action)
+        }
     }
 
     override fun initData() {

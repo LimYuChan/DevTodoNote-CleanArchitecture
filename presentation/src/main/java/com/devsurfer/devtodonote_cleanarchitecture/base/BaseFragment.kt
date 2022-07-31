@@ -9,6 +9,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import com.devsurfer.devtodonote_cleanarchitecture.extension.errorHandler
 import com.devsurfer.domain.state.Failure
@@ -18,7 +19,6 @@ abstract class BaseFragment<T: ViewDataBinding>(
 ): Fragment(){
 
     protected lateinit var binding: T
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

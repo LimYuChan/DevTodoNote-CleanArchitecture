@@ -7,5 +7,7 @@ import com.devsurfer.domain.state.ResourceState
 interface NoteRepository {
     suspend fun getNotes(): List<Note>
     suspend fun getNotesByRepositoryId(repositoryId: Int): List<Note>
+    suspend fun getTodoNotesByRepositoryId(repositoryId: Int): List<Note>
+    suspend fun getDoneNotesByRepositoryId(repositoryId: Int): List<Note>
     suspend fun getNote(contentId: Long): Note?
 }
