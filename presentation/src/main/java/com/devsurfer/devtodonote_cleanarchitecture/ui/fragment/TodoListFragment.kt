@@ -35,17 +35,16 @@ class TodoListFragment(
                 Log.d(TAG, "initListener: $it")
                 when(it){
                     is ResourceState.Success->{
-                        binding.layoutProgress.visibility = View.GONE
+                        binding.layoutLoadingProgress.root.visibility = View.GONE
                     }
                     is ResourceState.Error->{
-                        binding.layoutProgress.visibility = View.GONE
+                        binding.layoutLoadingProgress.root.visibility = View.GONE
                         errorHandler(it.failure)
                     }
                     is ResourceState.Loading->{
-                        binding.layoutProgress.visibility = View.VISIBLE
+                        binding.layoutLoadingProgress.root.visibility = View.VISIBLE
                     }
                 }
-                Log.d(TAG, "initListener: ${binding.layoutProgress.visibility}")
             }
         }
     }

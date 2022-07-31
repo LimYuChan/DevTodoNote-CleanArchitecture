@@ -14,6 +14,7 @@ import com.devsurfer.domain.useCase.userData.GetUserRepositoriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,8 +25,8 @@ class HomeViewModel @Inject constructor(
     private val userDataManager: UserDataManager
 ): ViewModel(){
 
-    private val _repositories = MutableSharedFlow<ResourceState<List<UserRepository>>>()
-    val repositories = _repositories.asSharedFlow()
+    private val _repositories = Channel<ResourceState<List<UserRepository>>>()
+    val repositories = _repositories.receiveAsFlow()
     private val _userData = MutableLiveData<ResourceState<User>>()
     val userData: LiveData<ResourceState<User>> get() = _userData
 
@@ -46,10 +47,10 @@ class HomeViewModel @Inject constructor(
 
     private fun getUserRepositories(){
         getRepositoriesUseCase().onEach {
-            _repositories.emit(it)
+            _repositories.send(it)
         }.catch { exception ->
             Log.e(TAG, "casedBy: ${exception.message}")
-            _repositories.emit(ResourceState.Error(failure = Failure.UnHandleError(exception.message ?: "")))
+            _repositories.send(ResourceState.Error(failure = Failure.UnHandleError(exception.message ?: "")))
         }.launchIn(viewModelScope)
     }
 
