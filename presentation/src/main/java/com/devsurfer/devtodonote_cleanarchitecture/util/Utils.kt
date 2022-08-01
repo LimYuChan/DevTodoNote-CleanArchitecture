@@ -3,7 +3,6 @@ package com.devsurfer.devtodonote_cleanarchitecture.util
 import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Point
 import android.graphics.Rect
 import android.os.Build
 import android.os.Handler
@@ -13,12 +12,12 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.fragment.app.FragmentManager
-import com.devsurfer.devtodonote_cleanarchitecture.ui.bottomSheet.OpenUserProfileBottomSheet
+import com.devsurfer.devtodonote_cleanarchitecture.ui.bottomSheet.OpenWebViewBottomSheet
 
 object Utils {
     fun openProfileBottomSheet(fragmentManager: FragmentManager, userProfileUrl: String?){
         userProfileUrl?.let {
-            val bottomSheet = OpenUserProfileBottomSheet(userProfileUrl)
+            val bottomSheet = OpenWebViewBottomSheet(userProfileUrl)
             bottomSheet.show(fragmentManager, "userProfileSheet")
         }
     }

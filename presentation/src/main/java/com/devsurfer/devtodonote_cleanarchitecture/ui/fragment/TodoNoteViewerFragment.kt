@@ -6,8 +6,6 @@ import com.devsurfer.devtodonote_cleanarchitecture.databinding.FragmentTodoNoteV
 
 class TodoNoteViewerFragment: BaseFragment<FragmentTodoNoteViewerBinding>(R.layout.fragment_todo_note_viewer){
 
-
-
     override fun initData() {
 
     }
