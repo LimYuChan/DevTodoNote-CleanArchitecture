@@ -27,7 +27,7 @@ abstract class BaseDialog<T: ViewDataBinding>(
 
     override fun onStart() {
         super.onStart()
-        if(dialog != null && activity != null && isAdded){
+        if(dialog != null && isAttachInActivity()){
             val fullWidth = Utils.getScreenWidth(requireActivity()) * .9
             dialog?.window?.setLayout(fullWidth.toInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
             dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -59,20 +59,22 @@ abstract class BaseDialog<T: ViewDataBinding>(
 
 
     protected fun showShortToast(message: String?){
-        if(activity != null && isAdded){
+        if(isAttachInActivity()){
             Toast.makeText(context, message ?: "", Toast.LENGTH_SHORT).show()
         }
     }
 
     protected fun showLongToast(message: String?){
-        if(activity != null && isAdded){
+        if(isAttachInActivity()){
             Toast.makeText(context, message ?: "", Toast.LENGTH_LONG).show()
         }
     }
 
     override fun dismiss() {
-        if (activity != null && isAdded) {
+        if (isAttachInActivity()) {
             super.dismiss()
         }
     }
+
+    fun isAttachInActivity(): Boolean = activity !=null && isAdded
 }

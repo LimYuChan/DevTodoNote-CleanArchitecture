@@ -7,26 +7,18 @@
             name="image"
             type="com.esafirm.imagepicker.model.Image" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginHorizontal="4dp"
+        app:cardCornerRadius="8dp"
         android:id="@+id/item_root">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/item_image"
-            android:foreground="@color/ef_black_alpha_50"
             isCenterCrop="@{true}"
             loadUrl="@{image.path}"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_selected_image_delete"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="vm"
-            type="com.devsurfer.devtodonote_cleanarchitecture.viewModel.WriteNoteViewModel" />
+            name="branch"
+            type="String" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -204,7 +204,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_branch"
-                android:text="@{@string/branch_format(vm.content.branch)}"
+                android:text="@{@string/branch_format(branch)}"
                 android:textSize="@dimen/body"
                 android:textColor="?android:textColorPrimary"
                 android:alpha=".8"

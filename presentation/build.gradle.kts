@@ -80,4 +80,6 @@ dependencies {
     implementation(Dependencies.Permission.TedPermission)
 
     implementation(Dependencies.ImagePicker.EsafirmPicker)
+
+    implementation(Dependencies.Gson.Gson)
 }

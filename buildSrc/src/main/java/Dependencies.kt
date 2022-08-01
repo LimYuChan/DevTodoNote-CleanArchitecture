@@ -83,4 +83,8 @@ object Dependencies {
     object HtmlParser{
         const val JSoup = "org.jsoup:jsoup:1.13.1"
     }
+
+    object Gson{
+        const val Gson = "com.google.code.gson:gson:2.9.1"
+    }
 }

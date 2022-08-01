@@ -1,43 +1,71 @@
 package com.devsurfer.devtodonote_cleanarchitecture.ui.fragment
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavArgs
 import androidx.navigation.fragment.navArgs
 import com.devsurfer.devtodonote_cleanarchitecture.R
-import com.devsurfer.devtodonote_cleanarchitecture.adapter.SelectedImageAdapter
+import com.devsurfer.devtodonote_cleanarchitecture.adapter.DrawingBoardAdapter
+import com.devsurfer.devtodonote_cleanarchitecture.adapter.ImageAdapter
+import com.devsurfer.devtodonote_cleanarchitecture.adapter.ReferenceLinkAdapter
 import com.devsurfer.devtodonote_cleanarchitecture.base.BaseFragment
 import com.devsurfer.devtodonote_cleanarchitecture.databinding.FragmentWriteNoteBinding
+import com.devsurfer.devtodonote_cleanarchitecture.enums.WriteNoteState
+import com.devsurfer.devtodonote_cleanarchitecture.ui.bottomSheet.ActionMoreBottomSheet
 import com.devsurfer.devtodonote_cleanarchitecture.ui.bottomSheet.DrawingBoardBottomSheet
-import com.devsurfer.devtodonote_cleanarchitecture.ui.bottomSheet.OpenUserProfileBottomSheet
 import com.devsurfer.devtodonote_cleanarchitecture.ui.dialog.AppendLinkDialog
+import com.devsurfer.devtodonote_cleanarchitecture.ui.dialog.SetBranchNameDialog
 import com.devsurfer.devtodonote_cleanarchitecture.uiEvent.CreateNoteUiEvent
 import com.devsurfer.devtodonote_cleanarchitecture.viewModel.WriteNoteViewModel
-import com.devsurfer.domain.useCase.note.LinkParseUseCase
 import com.esafirm.imagepicker.features.ImagePickerConfig
 import com.esafirm.imagepicker.features.ImagePickerLauncher
 import com.esafirm.imagepicker.features.ImagePickerMode
 import com.esafirm.imagepicker.features.registerImagePicker
-import com.esafirm.imagepicker.model.Image
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class WriteNoteFragment: BaseFragment<FragmentWriteNoteBinding>(R.layout.fragment_write_note) {
+class WriteNoteFragment : BaseFragment<FragmentWriteNoteBinding>(R.layout.fragment_write_note) {
 
     private val viewModel: WriteNoteViewModel by viewModels()
     private val args: WriteNoteFragmentArgs by navArgs()
 
     private var imagePickerLauncher: ImagePickerLauncher? = null
-    private val selectedImageAdapter = SelectedImageAdapter{
-        viewModel.onEvent(CreateNoteUiEvent.RemoveImage(it))
+
+    private val imageAdapter = ImageAdapter {
+        if (isAttachInActivity()) {
+            val moreBottomSheet = ActionMoreBottomSheet(isOnlyDelete = true, onDelete = {
+                viewModel.onEvent(CreateNoteUiEvent.RemoveImage(it))
+            })
+            moreBottomSheet.show(childFragmentManager, "moreSheet")
+        }
+    }
+
+    private val drawingBoardAdapter = DrawingBoardAdapter { selectDrawingBoard ->
+        if (isAttachInActivity()) {
+            val moreBottomSheet = ActionMoreBottomSheet(onDelete = {
+                viewModel.onEvent(CreateNoteUiEvent.RemoveDrawingBoard(selectDrawingBoard))
+            }, onEdit = {
+                val drawingBoardBottomSheet =
+                    DrawingBoardBottomSheet(selectDrawingBoard) { newDrawingBoard ->
+                        viewModel.onEvent(CreateNoteUiEvent.RemoveDrawingBoard(selectDrawingBoard))
+                        viewModel.onEvent(CreateNoteUiEvent.AddDrawingBoard(newDrawingBoard))
+                    }
+                drawingBoardBottomSheet.show(childFragmentManager, "drawingBoardSheet")
+            })
+            moreBottomSheet.show(childFragmentManager, "moreSheet")
+        }
+    }
+    private val referenceLinkAdapter = ReferenceLinkAdapter {
+        if (isAttachInActivity()) {
+            val moreBottomSheet = ActionMoreBottomSheet(
+                isOnlyDelete = true,
+                onDelete = {
+                    viewModel.onEvent(CreateNoteUiEvent.RemoveReferenceLink(it))
+                }
+            )
+            moreBottomSheet.show(childFragmentManager, "moreSheet")
+        }
     }
 
     override fun initData() {
@@ -49,22 +77,26 @@ class WriteNoteFragment: BaseFragment<FragmentWriteNoteBinding>(R.layout.fragmen
     }
 
     override fun initUI() {
-        with(binding){
+        with(binding) {
             //viewModel data binding
-            vm = viewModel
+            branch = viewModel.getNowBranch()
             //action bar
             actionBar.setOnMenuItemClickListener {
-                if(it.itemId == R.id.menu_button_done){
-                    if(etContent.text.isNullOrBlank()){
+                if (it.itemId == R.id.menu_button_done) {
+                    if (etContent.text.isNullOrBlank()) {
                         showShortToast(getString(R.string.toast_error_blank_content))
-                    }else{
+                    } else {
                         viewModel.onEvent(CreateNoteUiEvent.Submit(etContent.text.toString()))
                     }
+                }else if(it.itemId == android.R.id.home){
+                    onBackPress()
                 }
                 true
             }
             //Resource layout
-            rvReferenceImage.adapter = selectedImageAdapter
+            rvReferenceImage.adapter = imageAdapter
+            rvReferenceDrawingBoard.adapter = drawingBoardAdapter
+            rvReferenceLink.adapter = referenceLinkAdapter
             //bottom button
             buttonAddImage.setOnClickListener {
                 val config = ImagePickerConfig(
@@ -74,37 +106,70 @@ class WriteNoteFragment: BaseFragment<FragmentWriteNoteBinding>(R.layout.fragmen
                 imagePickerLauncher?.launch(config)
             }
             buttonAddDrawingBoard.setOnClickListener {
-                val bottomSheet = DrawingBoardBottomSheet{
-
+                val bottomSheet = DrawingBoardBottomSheet {
+                    viewModel.onEvent(CreateNoteUiEvent.AddDrawingBoard(it))
                 }
-                if(activity != null && isAdded){
+                if (isAttachInActivity()) {
                     bottomSheet.show(childFragmentManager, "drawingBoardSheet")
                 }
             }
 
             buttonAddReferenceLink.setOnClickListener {
-                val dialog = AppendLinkDialog{
-
+                val dialog = AppendLinkDialog {
+                    viewModel.onEvent(CreateNoteUiEvent.AddReferenceLink(it))
                 }
-                if(activity != null && isAdded){
-                    dialog.show(childFragmentManager ,"appendLinkDialog")
+                if (isAttachInActivity()) {
+                    dialog.show(childFragmentManager, "appendLinkDialog")
                 }
             }
+
+            tvBranch.setOnClickListener {
+                if(viewModel.getWriterState() == WriteNoteState.Edit){
+                    return@setOnClickListener
+                }
+                val dialog = SetBranchNameDialog(
+                    branchName = viewModel.getNowBranch(),
+                    onChange = {
+                        viewModel.updateBranchName(it)
+                    },
+                    onReset = {
+                        viewModel.updateBranchName()
+                    })
+                if(isAttachInActivity()){
+                    dialog.show(childFragmentManager, "branchDialog")
+                }
+            }
+
         }
     }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun initListener() {
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            viewModel.imageList.observe(viewLifecycleOwner){
-                binding.layoutAddedImage.visibility = if(it.isNotEmpty()) View.VISIBLE else View.GONE
-                selectedImageAdapter.submitList(it)
-                selectedImageAdapter.notifyDataSetChanged()
-            }
+        viewModel.content.observe(viewLifecycleOwner){
+            binding.branch = it.branch
+        }
+        viewModel.imageList.observe(viewLifecycleOwner) {
+            binding.layoutAddedImage.visibility = if (it.isNotEmpty()) View.VISIBLE else View.GONE
+            imageAdapter.submitList(it)
+            imageAdapter.notifyDataSetChanged()
+        }
+
+        viewModel.drawingBoardList.observe(viewLifecycleOwner) {
+            binding.layoutAddedDrawingBoard.visibility =
+                if (it.isNotEmpty()) View.VISIBLE else View.GONE
+            drawingBoardAdapter.submitList(it)
+            drawingBoardAdapter.notifyDataSetChanged()
+        }
+
+        viewModel.referenceLinkList.observe(viewLifecycleOwner) {
+            binding.layoutAddedReferenceLink.visibility =
+                if (it.isNotEmpty()) View.VISIBLE else View.GONE
+            referenceLinkAdapter.submitList(it)
+            referenceLinkAdapter.notifyDataSetChanged()
         }
     }
 
-    companion object{
+    companion object {
         private const val TAG = "WriteNoteFragment"
     }
 }

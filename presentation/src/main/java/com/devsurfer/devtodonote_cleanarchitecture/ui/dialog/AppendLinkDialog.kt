@@ -1,5 +1,6 @@
 package com.devsurfer.devtodonote_cleanarchitecture.ui.dialog
 
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -41,6 +42,7 @@ class AppendLinkDialog(
             viewModel.linkParseState.collectLatest {
                 when (it) {
                     is ResourceState.Success -> {
+                        Log.d(TAG, "initListener: ${it.data}")
                         binding.layoutLoadingProgress.root.visibility = View.GONE
                         onAppend(it.data)
                         dismiss()
@@ -55,5 +57,9 @@ class AppendLinkDialog(
                 }
             }
         }
+    }
+
+    companion object{
+        private const val TAG = "AppendLinkDialog"
     }
 }

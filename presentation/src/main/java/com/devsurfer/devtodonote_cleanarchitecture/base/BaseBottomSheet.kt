@@ -14,13 +14,20 @@ import com.devsurfer.devtodonote_cleanarchitecture.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 abstract class BaseBottomSheet<T: ViewDataBinding>(
-    @LayoutRes val layoutResource: Int
+    @LayoutRes val layoutResource: Int,
+    private val isBackgroundTransparentEnable: Boolean = false
 ): BottomSheetDialogFragment(){
 
     protected lateinit var binding: T
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(isBackgroundTransparentEnable){
+            setStyle(
+                STYLE_NORMAL,
+                R.style.TransparentBottomSheet
+            )
+        }
         initData()
     }
 
@@ -48,20 +55,22 @@ abstract class BaseBottomSheet<T: ViewDataBinding>(
     abstract fun initListener()
 
     protected fun showShortToast(message: String?){
-        if(activity != null && isAdded){
+        if(isAttachInActivity()){
             Toast.makeText(context, message ?: "", Toast.LENGTH_SHORT).show()
         }
     }
 
     protected fun showLongToast(message: String?){
-        if(activity != null && isAdded){
+        if(isAttachInActivity()){
             Toast.makeText(context, message ?: "", Toast.LENGTH_LONG).show()
         }
     }
 
     override fun dismiss() {
-        if(activity != null && isAdded){
+        if(isAttachInActivity()){
             super.dismiss()
         }
     }
+
+    fun isAttachInActivity(): Boolean = activity !=null && isAdded
 }

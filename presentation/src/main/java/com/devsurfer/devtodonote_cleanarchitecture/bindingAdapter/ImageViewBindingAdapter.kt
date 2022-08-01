@@ -9,16 +9,22 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 object ImageViewBindingAdapter {
     @SuppressLint("CheckResult")
     @JvmStatic
-    @BindingAdapter(value = ["loadUrl", "isCenterCrop", "isCircle","cornerRadius"], requireAll = false)
+    @BindingAdapter(value = ["loadUrl", "isCenterCrop", "isCircle", "cornerRadius", "isFile"], requireAll = false)
     fun bindLoadImageView(
         imageView: ImageView,
         loadUrl: String?,
         isCenterCrop: Boolean = true,
         isCircle: Boolean = false,
-        cornerRadius: Int
+        cornerRadius: Int,
+        isFile: Boolean = false
     ){
         loadUrl?.let {
-            val glide = Glide.with(imageView.rootView).load(it).apply{
+            val absoluteUrl =
+                if(isFile)
+                    "${imageView.context.externalCacheDir?.absoluteFile}/$it"
+                else
+                    it
+            val glide = Glide.with(imageView.rootView).load(absoluteUrl).apply{
                 if(isCenterCrop){
                     this.centerCrop()
                 }

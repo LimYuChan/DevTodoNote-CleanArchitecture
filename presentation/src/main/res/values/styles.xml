@@ -21,9 +21,9 @@
     </style>
 
     <style name="TransparentBottomSheet" parent="Theme.Design.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/TransparentBottomSheet.Style</item>
+        <item name="bottomSheetStyle">@style/TransparentBottomSheetStyle</item>
     </style>
-    <style name="TransparentBottomSheet.Style" parent="Widget.Design.BottomSheet.Modal">
-        <item name="background">@android:color/transparent</item>
+    <style name="TransparentBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">#00000000</item>
     </style>
 </resources>

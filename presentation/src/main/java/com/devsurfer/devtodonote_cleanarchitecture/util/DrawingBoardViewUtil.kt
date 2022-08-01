@@ -2,6 +2,7 @@ package com.devsurfer.devtodonote_cleanarchitecture.util
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -10,19 +11,13 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import com.devsurfer.devtodonote_cleanarchitecture.extension.resolveColorAttr
+import com.devsurfer.domain.item.DrawingPoint
 import com.esafirm.imagepicker.model.Image
 
 @SuppressLint("ResourceType")
 class DrawingBoardViewUtil(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
-    data class Point(
-        val x: Float,
-        val y: Float,
-        val isContinue: Boolean,
-        val color: Int
-    )
-
-    var list = arrayListOf<Point>()
+    var list = arrayListOf<DrawingPoint>()
     var nowColor: Int = 0
 
     @SuppressLint("DrawAllocation")
@@ -42,10 +37,10 @@ class DrawingBoardViewUtil(context: Context?, attrs: AttributeSet?) : View(conte
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         when(event?.action){
             MotionEvent.ACTION_DOWN->{
-                list.add(Point(event.x, event.y, false, nowColor))
+                list.add(DrawingPoint(event.x, event.y, false, nowColor))
             }
             MotionEvent.ACTION_MOVE->{
-                list.add(Point(event.x, event.y, true, nowColor))
+                list.add(DrawingPoint(event.x, event.y, true, nowColor))
             }
         }
         invalidate()
@@ -70,15 +65,22 @@ class DrawingBoardViewUtil(context: Context?, attrs: AttributeSet?) : View(conte
         }
     }
 
+    fun getBitmap(): Bitmap{
+        val bitmap = Bitmap.createBitmap(this.width, this.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        this.draw(canvas)
+        return bitmap
+    }
+
     fun setPaintColor(color: Int){
         nowColor = color
     }
 
-    fun getDrawing() : ArrayList<Point> {
+    fun getDrawing() : List<DrawingPoint> {
         return list
     }
 
-    fun setDrawing(sign: List<Point>) {
+    fun setDrawing(sign: List<DrawingPoint>) {
         list.addAll(sign)
         invalidate()
     }

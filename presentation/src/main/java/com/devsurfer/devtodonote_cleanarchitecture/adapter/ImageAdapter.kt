@@ -10,9 +10,9 @@ import com.devsurfer.devtodonote_cleanarchitecture.R
 import com.devsurfer.devtodonote_cleanarchitecture.databinding.ItemSelectedImageBinding
 import com.esafirm.imagepicker.model.Image
 
-class SelectedImageAdapter(
+class ImageAdapter(
     val deleteItem: (Image) -> Unit
-): ListAdapter<Image, SelectedImageAdapter.SelectedImageViewHolder>(diffUtil){
+): ListAdapter<Image, ImageAdapter.SelectedImageViewHolder>(diffUtil){
 
     inner class SelectedImageViewHolder(val binding: ItemSelectedImageBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(data: Image){

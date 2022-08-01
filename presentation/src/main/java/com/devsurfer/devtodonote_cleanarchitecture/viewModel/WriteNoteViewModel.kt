@@ -1,5 +1,6 @@
 package com.devsurfer.devtodonote_cleanarchitecture.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -74,6 +75,19 @@ class WriteNoteViewModel @Inject constructor(
     private fun updateContentMemoData(content: String){
         _content.value = _content.value?.copy(content = content)
     }
+
+    fun updateBranchName(branchName: String? = null){
+        _content.value = _content.value?.copy(branch = branchName ?: createNewBranch())
+        Log.d(TAG, "updateBranchName: ${_content.value}")
+    }
+
+    fun getWriterState(): WriteNoteState{
+        return this.writeNoteState
+    }
+
+    fun getNowBranch(): String{
+        return _content.value?.branch ?: createNewBranch()
+    }
     /**
      * ui event receive
      */
@@ -111,8 +125,11 @@ class WriteNoteViewModel @Inject constructor(
         try{
             "${Constants.DEFAULT_NEW_BRANCH_TITLE}-${getLastContentIdUseCase().plus(1)}"
         }catch (e: NullPointerException){
-            "${Constants.DEFAULT_NEW_BRANCH_TITLE}-${StringUtils.getRandomBranchNumberToString()}"
+            "${Constants.DEFAULT_NEW_BRANCH_TITLE}-${StringUtils.getRandomBranchNumber()}"
         }
     }
 
+    companion object{
+        private const val TAG = "WriteNoteViewModel"
+    }
 }

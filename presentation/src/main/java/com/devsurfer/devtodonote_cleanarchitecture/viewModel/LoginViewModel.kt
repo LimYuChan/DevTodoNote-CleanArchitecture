@@ -33,7 +33,7 @@ class LoginViewModel @Inject constructor(
     private var loginStateKey =""
 
     fun getLoginUri(): Uri{
-        loginStateKey = StringUtils.getRandomString(32)
+        loginStateKey = StringUtils.getRandom(32)
         return Uri.Builder()
             .scheme("https")
             .authority("github.com")
