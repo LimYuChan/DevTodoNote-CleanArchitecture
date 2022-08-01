@@ -20,17 +20,20 @@
             android:name="item_user_repository"
             app:argType="com.devsurfer.domain.model.userData.UserRepository" />
         <action
-            android:id="@+id/action_todoListWrapperFragment_to_createNoteFragment"
-            app:destination="@id/createNoteFragment" />
+            android:id="@+id/action_todoListWrapperFragment_to_writeNoteFragment"
+            app:destination="@id/writeNoteFragment" />
     </fragment>
     <fragment
-        android:id="@+id/createNoteFragment"
-        android:name="com.devsurfer.devtodonote_cleanarchitecture.ui.fragment.CreateNoteFragment"
-        android:label="CreateNoteFragment" >
+        android:id="@+id/writeNoteFragment"
+        android:name="com.devsurfer.devtodonote_cleanarchitecture.ui.fragment.WriteNoteFragment"
+        android:label="WriteNoteFragment" >
         <argument
             android:name="item_note"
             app:argType="com.devsurfer.domain.model.note.Note"
             app:nullable="true"
             android:defaultValue="@null" />
+        <argument
+            android:name="item_repository_id"
+            app:argType="integer" />
     </fragment>
 </navigation>

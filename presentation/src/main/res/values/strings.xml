@@ -1,12 +1,20 @@
 <resources>
     <string name="app_name">DevTodoNote_CleanArchitecture</string>
+
+    <string name="permission_denied_message">노트에 사진이나 스케치 정보를 추가하기 위해서는 저장소 접근 권한이 필요합니다</string>
+
     <string name="guide_description">개발을 조금 더 계획적으로\n진행할 수 있도록 도와주는 앱 입니다.</string>
     <string name="github_login">Github로 로그인하기</string>
 
     <string name="app_bar_title">Dev Todo Notes</string>
+    <string name="app_bar_title_create_note">Todo</string>
 
     <string name="action_menu_search">Search</string>
     <string name="action_menu_more">More</string>
+    <string name="action_menu_done">Done</string>
+
+    <string name="cancel">취소</string>
+    <string name="done">완료</string>
 
     <string name="plz_select_repository">작업 메모를 남길 repository를 선택해주세요,</string>
 
@@ -16,6 +24,16 @@
     <string name="user_repos_content_format">public repos: %d  private repos: %d</string>
 
     <string name="toast_error_not_found_user">사용자를 찾을 수 없습니다.</string>
+    <string name="toast_error_blank_content">내용을 입력해주세요.</string>
 
     <string name="appbar_title_user_repository">Repo > %s</string>
+
+    <string name="hint_input_content">내용을 입력해주세요</string>
+
+    <string name="title_reference_image">참고 이미지</string>
+    <string name="title_reference_drawing_board">스케치 메모</string>
+    <string name="title_reference_link">참고 링크</string>
+    <string name="branch_format">Branch: %s</string>
+
+    <string name="hint_append_link">추가하실 링크를 입력해주세요</string>
 </resources>

@@ -14,7 +14,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 class TodoListWrapperFragment(): BaseFragment<FragmentTodoListWrapperBinding>(R.layout.fragment_todo_list_wrapper){
 
     private lateinit var adapter: TodoListViewpagerFragmentAdapter
-    val args: TodoListWrapperFragmentArgs by navArgs()
+    private val args: TodoListWrapperFragmentArgs by navArgs()
 
     override fun initData() {
     }
@@ -30,7 +30,7 @@ class TodoListWrapperFragment(): BaseFragment<FragmentTodoListWrapperBinding>(R.
             }.attach()
             viewpagerNoteState.setPageTransformer(ViewpagerTransform())
             buttonCreateNote.setOnClickListener {
-                val action = TodoListWrapperFragmentDirections.actionTodoListWrapperFragmentToCreateNoteFragment()
+                val action = TodoListWrapperFragmentDirections.actionTodoListWrapperFragmentToWriteNoteFragment(args.itemUserRepository.id)
                 view?.let { view->
                     Navigation.findNavController(view).navigate(action)
                 }

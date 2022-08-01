@@ -12,4 +12,5 @@
     <color name="progress_background_color">#40000000</color>
     <color name="repo_public_color">#48bb78</color>
     <color name="standard_divider_color">#f8f8f8</color>
+    <color name="negative">#ff6565</color>
 </resources>

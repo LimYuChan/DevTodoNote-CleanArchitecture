@@ -43,4 +43,6 @@ dependencies {
 
     implementation(Dependencies.DaggerHilt.HiltAndroid)
     kapt(Dependencies.DaggerHilt.HiltAndroidCompiler)
+
+    implementation(Dependencies.HtmlParser.JSoup)
 }

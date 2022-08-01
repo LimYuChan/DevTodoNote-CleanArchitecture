@@ -19,4 +19,11 @@
         <item name="android:textSize">@dimen/body</item>
         <item name="android:fontFamily">@font/montserrat_alternates_regular</item>
     </style>
+
+    <style name="TransparentBottomSheet" parent="Theme.Design.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/TransparentBottomSheet.Style</item>
+    </style>
+    <style name="TransparentBottomSheet.Style" parent="Widget.Design.BottomSheet.Modal">
+        <item name="background">@android:color/transparent</item>
+    </style>
 </resources>
