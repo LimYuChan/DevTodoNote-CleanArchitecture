@@ -11,14 +11,16 @@ import com.devsurfer.devtodonote_cleanarchitecture.databinding.ItemSelectedImage
 import com.esafirm.imagepicker.model.Image
 
 class ImageAdapter(
-    val deleteItem: (Image) -> Unit
+    val onViewItem: (Int) -> Unit = {},
+    val deleteItem: (Image) -> Unit = {}
 ): ListAdapter<Image, ImageAdapter.SelectedImageViewHolder>(diffUtil){
 
     inner class SelectedImageViewHolder(val binding: ItemSelectedImageBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(data: Image){
+        fun bind(data: Image, position: Int){
             binding.image = data
             binding.itemRoot.setOnClickListener {
                 deleteItem(data)
+                onViewItem(position)
             }
         }
     }
@@ -34,7 +36,7 @@ class ImageAdapter(
 
 
     override fun onBindViewHolder(holder: SelectedImageViewHolder, position: Int) {
-        currentList[position]?.let{ holder.bind(it) }
+        currentList[position]?.let{ holder.bind(it, position) }
     }
 
     companion object{

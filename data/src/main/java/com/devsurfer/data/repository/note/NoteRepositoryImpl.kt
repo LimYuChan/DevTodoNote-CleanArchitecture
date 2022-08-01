@@ -28,4 +28,6 @@ class NoteRepositoryImpl @Inject constructor(
             NoteMapper.mapperToModel(note)
         }
     }
+
+    override suspend fun deleteNote(contentId: Long): Int = dao.deleteNoteByContentId(contentId)
 }

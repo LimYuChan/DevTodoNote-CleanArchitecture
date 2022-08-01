@@ -9,5 +9,6 @@ interface NoteRepository {
     suspend fun getNotesByRepositoryId(repositoryId: Int): List<Note>
     suspend fun getTodoNotesByRepositoryId(repositoryId: Int): List<Note>
     suspend fun getDoneNotesByRepositoryId(repositoryId: Int): List<Note>
+    suspend fun deleteNote(contentId: Long): Int
     suspend fun getNote(contentId: Long): Note?
 }

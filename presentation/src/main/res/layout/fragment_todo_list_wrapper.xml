@@ -15,7 +15,6 @@
             android:id="@+id/action_bar"
             app:title="@{@string/appbar_title_user_repository(repository_name)}"
             app:titleTextAppearance="@style/AppBarTitleSmallStyle"
-            app:menu="@menu/search_more_menu"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
         <com.google.android.material.tabs.TabLayout

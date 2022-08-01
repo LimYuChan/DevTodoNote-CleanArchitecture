@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devsurfer.data.BuildConfig
 import com.devsurfer.data.manager.PreferenceManager
+import com.devsurfer.data.util.GithubApiInterceptor
 import com.devsurfer.domain.state.Failure
 import com.devsurfer.domain.state.ResourceState
 import com.devsurfer.domain.useCase.auth.GetAccessTokenUseCase

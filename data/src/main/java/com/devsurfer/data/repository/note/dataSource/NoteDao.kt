@@ -26,4 +26,8 @@ interface NoteDao {
     @Transaction
     @Query("SELECT * FROM note_content WHERE content_id = :contentId")
     suspend fun getNote(contentId: Long): NoteEntity?
+
+    @Transaction
+    @Query("DELETE FROM note_content WHERE content_id = :contentId")
+    suspend fun deleteNoteByContentId(contentId: Long): Int
 }

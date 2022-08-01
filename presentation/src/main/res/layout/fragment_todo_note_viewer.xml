@@ -21,6 +21,7 @@
             app:navigationIcon="@drawable/ic_back"
             app:title="@{@string/appbar_title_user_repository(repository_name)}"
             app:titleTextAppearance="@style/AppBarTitleSmallStyle"
+            app:menu="@menu/more_menu"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -230,6 +231,6 @@
             </androidx.core.widget.NestedScrollView>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-
+        <include layout="@layout/layout_loading_progress" android:id="@+id/layout_loading_progress"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
