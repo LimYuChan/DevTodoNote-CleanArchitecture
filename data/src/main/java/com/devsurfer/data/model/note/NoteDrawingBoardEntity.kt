@@ -10,7 +10,8 @@ import kotlinx.parcelize.Parcelize
     ForeignKey(
         entity = NoteContentEntity::class,
         parentColumns = ["content_id"],
-        childColumns = ["note_content_id"]
+        childColumns = ["note_content_id"],
+        onDelete = ForeignKey.CASCADE
     )
 ])
 data class NoteDrawingBoardEntity(

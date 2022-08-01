@@ -11,14 +11,16 @@ import com.devsurfer.devtodonote_cleanarchitecture.databinding.ItemSelectedDrawi
 import com.devsurfer.domain.item.DrawingBoard
 
 class DrawingBoardAdapter(
-    val onItemClick: (DrawingBoard) -> Unit
+    val onViewItemClick: (Int) -> Unit = {},
+    val onItemClick: (DrawingBoard) -> Unit = {}
 ): ListAdapter<DrawingBoard, DrawingBoardAdapter.SelectedDrawingBoardViewHolder>(diffUtil){
 
     inner class SelectedDrawingBoardViewHolder(val binding: ItemSelectedDrawingBoardBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(data: DrawingBoard){
+        fun bind(data: DrawingBoard, position: Int){
             binding.drawingBoard = data
             binding.layoutRoot.setOnClickListener {
                 onItemClick(data)
+                onViewItemClick(position)
             }
         }
     }
@@ -27,7 +29,7 @@ class DrawingBoardAdapter(
         SelectedDrawingBoardViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_selected_drawing_board, parent, false))
 
     override fun onBindViewHolder(holder: SelectedDrawingBoardViewHolder, position: Int) {
-        currentList[position]?.let{ holder.bind(it) }
+        currentList[position]?.let{ holder.bind(it, position) }
     }
 
 

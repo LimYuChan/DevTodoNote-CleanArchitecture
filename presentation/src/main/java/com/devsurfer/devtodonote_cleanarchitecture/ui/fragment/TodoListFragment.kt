@@ -32,7 +32,6 @@ class TodoListFragment(
     }
 
     override fun initData() {
-        viewModel.getRepositoryEvents(repositoryName)
     }
 
     override fun initUI() {
@@ -62,21 +61,6 @@ class TodoListFragment(
                     }
                 }
                 binding.swipeRefreshLayout.isRefreshing = false
-            }
-        }
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            viewModel.repositoryEvents.collectLatest {
-                when(it){
-                    is ResourceState.Success->{
-                        Log.d(TAG, "initListener: ${it.data.filter { it.type == "PullRequestEvent" }}")
-                    }
-                    is ResourceState.Error->{
-                        errorHandler(it.failure)
-                    }
-                    is ResourceState.Loading->{
-
-                    }
-                }
             }
         }
     }
