@@ -44,7 +44,7 @@ class WriteNoteFragment: BaseFragment<FragmentWriteNoteBinding>(R.layout.fragmen
         viewModel.initData(args.itemNote)
         viewModel.initRepositoryId(args.itemRepositoryId)
         imagePickerLauncher = registerImagePicker { result ->
-            viewModel.onEvent(CreateNoteUiEvent.AddImages(result.map { "file://${it.path}"}))
+            viewModel.onEvent(CreateNoteUiEvent.AddImages(result))
         }
     }
 

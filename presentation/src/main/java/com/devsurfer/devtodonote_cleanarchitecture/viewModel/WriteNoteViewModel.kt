@@ -9,9 +9,12 @@ import com.devsurfer.domain.model.note.Note
 import com.devsurfer.domain.model.note.NoteContent
 import com.devsurfer.domain.state.ResourceState
 import com.devsurfer.devtodonote_cleanarchitecture.uiEvent.CreateNoteUiEvent
+import com.devsurfer.domain.item.DrawingBoard
+import com.devsurfer.domain.item.ReferenceLink
 import com.devsurfer.domain.useCase.note.GetLastContentIdUseCase
 import com.devsurfer.domain.util.Constants
 import com.devsurfer.domain.util.StringUtils
+import com.esafirm.imagepicker.model.Image
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -31,14 +34,14 @@ class WriteNoteViewModel @Inject constructor(
     private val _content = MutableLiveData(NoteContent())
     val content: LiveData<NoteContent> get() = _content
 
-    private val _imageList = ListLiveData<String>()
-    val imageList: LiveData<ArrayList<String>> get() = _imageList
+    private val _imageList = ListLiveData<Image>()
+    val imageList: LiveData<ArrayList<Image>> get() = _imageList
 
-    private val _drawingBoardList = ListLiveData<String>()
-    val drawingBoardList: LiveData<ArrayList<String>> get() = _drawingBoardList
+    private val _drawingBoardList = ListLiveData<DrawingBoard>()
+    val drawingBoardList: LiveData<ArrayList<DrawingBoard>> get() = _drawingBoardList
 
-    private val _referenceLinkList = ListLiveData<String>()
-    val referenceLinkList: LiveData<ArrayList<String>> get() = _referenceLinkList
+    private val _referenceLinkList = ListLiveData<ReferenceLink>()
+    val referenceLinkList: LiveData<ArrayList<ReferenceLink>> get() = _referenceLinkList
 
     private val _submit = Channel<ResourceState<Unit>>()
     val submit = _submit.receiveAsFlow()
@@ -58,9 +61,9 @@ class WriteNoteViewModel @Inject constructor(
             }else{
                 originBranch = note.content.branch!!
             }
-            _imageList.update(note.imageList.map { it.fileUrl })
-            _drawingBoardList.update(note.drawingBoardList.map { it.fileUrl })
-            _referenceLinkList.update(note.referenceLinkList.map { it.link })
+            _imageList.update(note.imageList.map { Image(it.fileId, it.fileName, it.fileUrl) })
+            _drawingBoardList.update(note.drawingBoardList.map { DrawingBoard(it.fileJsonString, it.fileImageUrl) })
+            _referenceLinkList.update(note.referenceLinkList.map { ReferenceLink(it.title, it.description, it.link, it.image) })
         }
     }
 

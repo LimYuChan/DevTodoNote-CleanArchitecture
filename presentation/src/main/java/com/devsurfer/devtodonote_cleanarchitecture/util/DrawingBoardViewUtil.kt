@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import com.devsurfer.devtodonote_cleanarchitecture.extension.resolveColorAttr
+import com.esafirm.imagepicker.model.Image
 
 @SuppressLint("ResourceType")
 class DrawingBoardViewUtil(context: Context?, attrs: AttributeSet?) : View(context, attrs) {

@@ -7,5 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class NoteImage(
     val id: Long = 0,
     val noteContentId: Long,
+    val fileId: Long,
+    val fileName: String,
     val fileUrl: String
 ): Parcelable

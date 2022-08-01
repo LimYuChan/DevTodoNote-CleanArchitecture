@@ -1,21 +1,18 @@
 package com.devsurfer.domain.useCase.note
 
-import android.util.Log
-import com.devsurfer.domain.item.LinkParseData
+import com.devsurfer.domain.item.ReferenceLink
 import com.devsurfer.domain.state.Failure
 import com.devsurfer.domain.state.ResourceState
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.jsoup.Jsoup
 import java.io.IOException
 
 class LinkParseUseCase {
 
-    operator fun invoke(link: String): ResourceState<LinkParseData> = runBlocking {
+    operator fun invoke(link: String): ResourceState<ReferenceLink> = runBlocking {
         try{
             var linkUrl = link
-            val parseData = LinkParseData()
+            val parseData = ReferenceLink()
             if(!linkUrl.startsWith("http")){
                 linkUrl = "http://$link"
             }

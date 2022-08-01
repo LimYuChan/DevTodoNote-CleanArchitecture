@@ -1,22 +1,20 @@
 package com.devsurfer.devtodonote_cleanarchitecture.ui.dialog
 
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.devsurfer.data.state.ResponseErrorState
 import com.devsurfer.devtodonote_cleanarchitecture.R
 import com.devsurfer.devtodonote_cleanarchitecture.base.BaseDialog
 import com.devsurfer.devtodonote_cleanarchitecture.databinding.DialogAppendLinkBinding
 import com.devsurfer.devtodonote_cleanarchitecture.viewModel.AppendLinkViewModel
-import com.devsurfer.domain.item.LinkParseData
+import com.devsurfer.domain.item.ReferenceLink
 import com.devsurfer.domain.state.ResourceState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class AppendLinkDialog(
-    val onAppend: (LinkParseData) -> Unit
+    val onAppend: (ReferenceLink) -> Unit
 ) : BaseDialog<DialogAppendLinkBinding>(R.layout.dialog_append_link) {
 
     private val viewModel: AppendLinkViewModel by viewModels()

@@ -1,6 +1,6 @@
 package com.devsurfer.domain.item
 
-data class LinkParseData(
+data class ReferenceLink(
     var title: String? = null,
     var description: String? = null,
     var url: String? = null,

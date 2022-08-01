@@ -16,5 +16,8 @@ import kotlinx.parcelize.Parcelize
 data class NoteReferenceLinkEntity(
     @PrimaryKey(autoGenerate = true) val note_reference_link_id: Long = 0,
     val note_content_id: Long,
+    val title: String? = null,
+    val description: String? = null,
+    val image: String? = null,
     val link: String
 )

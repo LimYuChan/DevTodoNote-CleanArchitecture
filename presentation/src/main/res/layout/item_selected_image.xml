@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="fileUrl"
-            type="String" />
+            name="image"
+            type="com.esafirm.imagepicker.model.Image" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="100dp"
@@ -18,7 +18,7 @@
             android:id="@+id/item_image"
             android:foreground="@color/ef_black_alpha_50"
             isCenterCrop="@{true}"
-            loadUrl="@{fileUrl}"/>
+            loadUrl="@{image.path}"/>
 
         <ImageView
             android:layout_width="wrap_content"

@@ -8,14 +8,15 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.devsurfer.devtodonote_cleanarchitecture.R
 import com.devsurfer.devtodonote_cleanarchitecture.databinding.ItemSelectedImageBinding
+import com.esafirm.imagepicker.model.Image
 
 class SelectedImageAdapter(
-    val deleteItem: (String) -> Unit
-): ListAdapter<String, SelectedImageAdapter.SelectedImageViewHolder>(diffUtil){
+    val deleteItem: (Image) -> Unit
+): ListAdapter<Image, SelectedImageAdapter.SelectedImageViewHolder>(diffUtil){
 
     inner class SelectedImageViewHolder(val binding: ItemSelectedImageBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(data: String){
-            binding.fileUrl = data
+        fun bind(data: Image){
+            binding.image = data
             binding.itemRoot.setOnClickListener {
                 deleteItem(data)
             }
@@ -37,9 +38,9 @@ class SelectedImageAdapter(
     }
 
     companion object{
-        val diffUtil = object: DiffUtil.ItemCallback<String>(){
-            override fun areContentsTheSame(oldItem: String, newItem: String): Boolean = oldItem == newItem
-            override fun areItemsTheSame(oldItem: String, newItem: String): Boolean = oldItem == newItem
+        val diffUtil = object: DiffUtil.ItemCallback<Image>(){
+            override fun areItemsTheSame(oldItem: Image, newItem: Image): Boolean = oldItem.id == newItem.id
+            override fun areContentsTheSame(oldItem: Image, newItem: Image): Boolean = oldItem == newItem
         }
     }
 }

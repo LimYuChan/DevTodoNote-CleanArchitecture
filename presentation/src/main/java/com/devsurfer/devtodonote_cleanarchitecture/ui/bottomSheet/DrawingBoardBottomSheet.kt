@@ -5,10 +5,11 @@ import com.devsurfer.devtodonote_cleanarchitecture.R
 import com.devsurfer.devtodonote_cleanarchitecture.base.FullScreenBottomSheet
 import com.devsurfer.devtodonote_cleanarchitecture.databinding.BottomSheetDrawingBoardBinding
 import com.devsurfer.devtodonote_cleanarchitecture.extension.resolveColorAttr
+import com.devsurfer.domain.item.DrawingBoard
 import com.esafirm.imagepicker.model.Image
 
 class DrawingBoardBottomSheet(
-    onSaveFile: (String) -> Unit
+    onSaveFile: (DrawingBoard) -> Unit
 ): FullScreenBottomSheet<BottomSheetDrawingBoardBinding>(R.layout.bottom_sheet_drawing_board) {
 
     override fun initData() {

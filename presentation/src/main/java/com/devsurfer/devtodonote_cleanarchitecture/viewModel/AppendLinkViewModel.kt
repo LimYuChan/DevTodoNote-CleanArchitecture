@@ -1,8 +1,7 @@
 package com.devsurfer.devtodonote_cleanarchitecture.viewModel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.devsurfer.domain.item.LinkParseData
+import com.devsurfer.domain.item.ReferenceLink
 import com.devsurfer.domain.state.ResourceState
 import com.devsurfer.domain.useCase.note.LinkParseUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +17,7 @@ class AppendLinkViewModel @Inject constructor(
     private val useCase: LinkParseUseCase
 ): ViewModel(){
 
-    private val _linkParseState = Channel<ResourceState<LinkParseData>>()
+    private val _linkParseState = Channel<ResourceState<ReferenceLink>>()
     val linkParseState = _linkParseState.receiveAsFlow()
 
     fun parseLink(link: String){
