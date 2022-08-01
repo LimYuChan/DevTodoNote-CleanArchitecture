@@ -16,5 +16,6 @@ import kotlinx.parcelize.Parcelize
 data class NoteDrawingBoardEntity(
     @PrimaryKey(autoGenerate = true) val drawing_board_id: Long = 0,
     val note_content_id: Long,
-    val file_url: String
+    val file_json_string: String,
+    val file_image_url: String
 )

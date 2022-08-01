@@ -7,5 +7,6 @@ import kotlinx.parcelize.Parcelize
 data class NoteDrawingBoard(
     val id: Long = 0,
     val noteContentId: Long,
-    val fileUrl: String
+    val fileJsonString: String,
+    val fileImageUrl: String
 ): Parcelable

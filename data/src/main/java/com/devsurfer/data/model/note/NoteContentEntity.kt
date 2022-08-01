@@ -13,6 +13,6 @@ data class NoteContentEntity(
     val updated_at: Long? = 0,
     val repository_id: Int = 0,
     val branch: String? = null,
-    val branch_state: String = "none",
+    val branch_state: Int = 0,
     val status:Int = 0
 )

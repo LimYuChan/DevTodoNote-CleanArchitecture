@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/standard_button_height"
+            android:id="@+id/button_cancel"
+            android:layout_marginHorizontal="@dimen/standard_horizontal_margin"
+            android:layout_marginBottom="@dimen/medium_spacer"
+            android:background="@drawable/solid_rectangle_corner_12"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/montserrat_alternates_bold"
+            android:gravity="center"
+            android:text="@string/cancel"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/body"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/standard_horizontal_margin"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="@dimen/medium_spacer"
+            android:background="@drawable/solid_rectangle_corner_12"
+            android:backgroundTint="@color/white"
+            app:layout_constraintBottom_toTopOf="@id/button_cancel"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/standard_button_height"
+                android:id="@+id/button_delete"
+                android:fontFamily="@font/montserrat_alternates_bold"
+                android:gravity="center"
+                android:text="@string/delete"
+                android:textColor="@color/negative"
+                android:textSize="@dimen/body"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:id="@+id/divider"
+                app:dividerColor="@color/standard_divider_color"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/button_delete"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/standard_button_height"
+                android:id="@+id/button_edit"
+                android:text="@string/edit"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/body"
+                android:fontFamily="@font/montserrat_alternates_bold"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/divider"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

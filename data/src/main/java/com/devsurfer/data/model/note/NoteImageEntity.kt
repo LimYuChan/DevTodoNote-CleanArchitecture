@@ -16,5 +16,7 @@ import kotlinx.parcelize.Parcelize
 data class NoteImageEntity(
     @PrimaryKey(autoGenerate = true) val image_id: Long = 0,
     val note_content_id: Long,
+    val file_id: Long,
+    val file_name: String,
     val file_url: String
 )

@@ -63,14 +63,16 @@ abstract class BaseFragment<T: ViewDataBinding>(
     }
 
     fun onBackPress(){
-        if(activity != null && isAdded){
+        if(isAttachInActivity()){
             requireActivity().onBackPressed()
         }
     }
 
     fun errorHandler(failure: Failure?){
-        if(activity != null && isAdded){
+        if(isAttachInActivity()){
             requireActivity().errorHandler(failure)
         }
     }
+
+    fun isAttachInActivity(): Boolean = activity !=null && isAdded
 }

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="link"
+            type="com.devsurfer.domain.item.ReferenceLink" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="270dp"
+        android:layout_height="wrap_content">
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout_item"
+            android:layout_margin="5dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="4dp"
+                android:paddingVertical="4dp">
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:id="@+id/item_image"
+                    tools:background="@drawable/solid_rectangle_corner_12"
+                    tools:backgroundTint="@color/gray"
+                    android:visibility="@{link.image == null ? View.GONE : View.VISIBLE}"
+                    loadUrl="@{link.image}"
+                    isFile="@{false}"
+                    isCenterCrop="@{true}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/item_title"
+                    android:text="@{link.title}"
+                    tools:text="link title test"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/body"
+                    android:fontFamily="@font/montserrat_alternates_bold"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:visibility="@{link.title == null ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintStart_toEndOf="@id/item_image"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/item_image"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/item_link"
+                    android:text="@{link.url}"
+                    tools:text="https:naver.com"
+                    android:textColor="@color/link"
+                    android:textSize="@dimen/caption"
+                    android:fontFamily="@font/montserrat_alternates_regular"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:visibility="@{link.url == null ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintStart_toStartOf="@id/item_title"
+                    app:layout_constraintEnd_toEndOf="@id/item_title"
+                    app:layout_constraintTop_toBottomOf="@id/item_title"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/item_description"
+                    android:text="@{link.description}"
+                    tools:text="test content description"
+                    android:textColor="@color/black"
+                    android:alpha=".8"
+                    android:textSize="@dimen/caption"
+                    android:fontFamily="@font/montserrat_alternates_regular"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:visibility="@{link.description == null ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintStart_toStartOf="@id/item_title"
+                    app:layout_constraintEnd_toEndOf="@id/item_title"
+                    app:layout_constraintTop_toBottomOf="@id/item_link"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

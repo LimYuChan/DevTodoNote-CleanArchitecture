@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="drawingBoard"
+            type="com.devsurfer.domain.item.DrawingBoard" />
+    </data>
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_margin="4dp"
+        android:id="@+id/layout_root">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            loadUrl="@{drawingBoard.fileImageUrl}"
+            isFile="@{true}"
+            isCenterCrop="@{true}"/>
+    </androidx.cardview.widget.CardView>
+</layout>

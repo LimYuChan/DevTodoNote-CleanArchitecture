@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="branch"
+            type="String" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:id="@+id/action_bar"
+            app:navigationIcon="@drawable/ic_back"
+            app:title="@string/app_bar_title_create_note"
+            app:titleTextAppearance="@style/StandardAppBarTitleStyle"
+            app:menu="@menu/working_done_menu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <!--Main content-->
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/scroll_layout"
+            android:overScrollMode="never"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/action_bar"
+            app:layout_constraintBottom_toTopOf="@id/layout_add_item_controller">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/et_content"
+                    android:textSize="@dimen/title_small"
+                    android:textColor="?android:textColorPrimary"
+                    android:hint="@string/hint_input_content"
+                    android:fontFamily="@font/montserrat_alternates_regular"
+                    android:inputType="textMultiLine"
+                    android:minLines="5"
+                    android:gravity="start"
+                    android:background="@null"
+                    android:layout_marginHorizontal="@dimen/standard_horizontal_margin"
+                    android:layout_marginTop="@dimen/medium_spacer"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <!--Added image layout-->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/layout_added_image"
+                    android:visibility="gone"
+                    android:paddingVertical="@dimen/medium_spacer"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_reference_image_title"
+                        android:text="@string/title_reference_image"
+                        android:textSize="@dimen/body"
+                        android:textColor="?android:textColorPrimary"
+                        android:fontFamily="@font/montserrat_alternates_bold"
+                        android:layout_marginStart="@dimen/standard_horizontal_margin"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rv_reference_image"
+                        android:paddingHorizontal="@dimen/standard_horizontal_margin"
+                        android:clipToPadding="false"
+                        android:clipChildren="false"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/normal_spacer"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_reference_image_title"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!--Added drawing board layout-->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/layout_added_drawing_board"
+                    android:visibility="gone"
+                    android:paddingVertical="@dimen/medium_spacer"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_added_image">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_reference_drawing_board_title"
+                        android:text="@string/title_reference_drawing_board"
+                        android:textSize="@dimen/body"
+                        android:textColor="?android:textColorPrimary"
+                        android:fontFamily="@font/montserrat_alternates_bold"
+                        android:layout_marginStart="@dimen/standard_horizontal_margin"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rv_reference_drawing_board"
+                        android:paddingHorizontal="@dimen/standard_horizontal_margin"
+                        android:clipToPadding="false"
+                        android:clipChildren="false"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/normal_spacer"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_reference_drawing_board_title"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!--Added reference link layout-->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/layout_added_reference_link"
+                    android:visibility="gone"
+                    android:paddingVertical="@dimen/medium_spacer"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_added_drawing_board">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_reference_link_title"
+                        android:text="@string/title_reference_link"
+                        android:textSize="@dimen/body"
+                        android:textColor="?android:textColorPrimary"
+                        android:fontFamily="@font/montserrat_alternates_bold"
+                        android:layout_marginStart="@dimen/standard_horizontal_margin"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rv_reference_link"
+                        android:paddingHorizontal="@dimen/standard_horizontal_margin"
+                        android:clipToPadding="false"
+                        android:clipChildren="false"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/normal_spacer"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_reference_link_title"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+        <!--Bottom Controller-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout_add_item_controller"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:dividerColor="@color/standard_divider_color"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_add_image"
+                android:paddingHorizontal="@dimen/normal_spacer"
+                android:paddingVertical="@dimen/normal_spacer"
+                android:src="@drawable/ic_add_image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_add_drawing_board"
+                android:paddingHorizontal="@dimen/normal_spacer"
+                android:paddingVertical="@dimen/normal_spacer"
+                android:src="@drawable/ic_add_drawing_board"
+                app:layout_constraintStart_toEndOf="@id/button_add_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_add_reference_link"
+                android:paddingHorizontal="@dimen/normal_spacer"
+                android:paddingVertical="@dimen/normal_spacer"
+                android:src="@drawable/ic_add_reference_link"
+                app:layout_constraintStart_toEndOf="@id/button_add_drawing_board"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_branch"
+                android:text="@{@string/branch_format(branch)}"
+                android:textSize="@dimen/body"
+                android:textColor="?android:textColorPrimary"
+                android:alpha=".8"
+                android:fontFamily="@font/montserrat_alternates_regular"
+                android:layout_marginEnd="@dimen/standard_horizontal_margin"
+                android:paddingStart="4dp"
+                tools:text="Branch: Work-1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_branch"
+                app:layout_constraintEnd_toStartOf="@id/tv_branch"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <include layout="@layout/layout_loading_progress" android:id="@+id/layout_loading_progress"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

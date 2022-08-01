@@ -73,7 +73,18 @@ object Dependencies {
     }
 
     object Permission{
-
         const val TedPermission = "io.github.ParkSangGwon:tedpermission-normal:3.3.0"
+    }
+
+    object ImagePicker{
+        const val EsafirmPicker = "com.github.esafirm:android-image-picker:3.0.0-beta5"
+    }
+
+    object HtmlParser{
+        const val JSoup = "org.jsoup:jsoup:1.13.1"
+    }
+
+    object Gson{
+        const val Gson = "com.google.code.gson:gson:2.9.1"
     }
 }

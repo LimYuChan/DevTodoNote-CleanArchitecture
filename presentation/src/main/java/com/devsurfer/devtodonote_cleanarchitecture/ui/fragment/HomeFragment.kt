@@ -43,23 +43,21 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     }
 
     override fun initListener() {
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            viewModel.userData.observe(viewLifecycleOwner){
-                when(it){
-                    is ResourceState.Success->{
-                        binding.user = it.data
-                        binding.layoutUserProfile.setOnClickListener { view ->
-                            if(activity != null && isAdded){
-                                Utils.openProfileBottomSheet(childFragmentManager, it.data.htmlUrl)
-                            }
+        viewModel.userData.observe(viewLifecycleOwner){
+            when(it){
+                is ResourceState.Success->{
+                    binding.user = it.data
+                    binding.layoutUserProfile.setOnClickListener { view ->
+                        if(isAttachInActivity()){
+                            Utils.openProfileBottomSheet(childFragmentManager, it.data.htmlUrl)
                         }
                     }
-                    is ResourceState.Error->{
-                        errorHandler(it.failure)
-                    }
-                    else->{
+                }
+                is ResourceState.Error->{
+                    errorHandler(it.failure)
+                }
+                else->{
 
-                    }
                 }
             }
         }
