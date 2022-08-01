@@ -11,6 +11,6 @@ data class NoteContent(
     val updatedAt: Long? = 0,
     val repositoryId: Int = 0,
     val branch: String? = null,
-    val branchState: String = "none",
+    val branchState: Int = 0,
     val status: Int = 0
 ): Parcelable

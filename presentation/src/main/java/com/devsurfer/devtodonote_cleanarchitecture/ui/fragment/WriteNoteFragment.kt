@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.devsurfer.devtodonote_cleanarchitecture.R
 import com.devsurfer.devtodonote_cleanarchitecture.adapter.DrawingBoardAdapter
@@ -18,11 +19,13 @@ import com.devsurfer.devtodonote_cleanarchitecture.ui.dialog.AppendLinkDialog
 import com.devsurfer.devtodonote_cleanarchitecture.ui.dialog.SetBranchNameDialog
 import com.devsurfer.devtodonote_cleanarchitecture.uiEvent.CreateNoteUiEvent
 import com.devsurfer.devtodonote_cleanarchitecture.viewModel.WriteNoteViewModel
+import com.devsurfer.domain.state.ResourceState
 import com.esafirm.imagepicker.features.ImagePickerConfig
 import com.esafirm.imagepicker.features.ImagePickerLauncher
 import com.esafirm.imagepicker.features.ImagePickerMode
 import com.esafirm.imagepicker.features.registerImagePicker
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class WriteNoteFragment : BaseFragment<FragmentWriteNoteBinding>(R.layout.fragment_write_note) {
@@ -166,6 +169,24 @@ class WriteNoteFragment : BaseFragment<FragmentWriteNoteBinding>(R.layout.fragme
                 if (it.isNotEmpty()) View.VISIBLE else View.GONE
             referenceLinkAdapter.submitList(it)
             referenceLinkAdapter.notifyDataSetChanged()
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            viewModel.submit.collectLatest {
+                when(it){
+                    is ResourceState.Success->{
+                        binding.layoutLoadingProgress.root.visibility = View.GONE
+                        onBackPress()
+                    }
+                    is ResourceState.Error->{
+                        binding.layoutLoadingProgress.root.visibility = View.GONE
+                        errorHandler(it.failure)
+                    }
+                    else->{
+                        binding.layoutLoadingProgress.root.visibility = View.VISIBLE
+                    }
+                }
+            }
         }
     }
 

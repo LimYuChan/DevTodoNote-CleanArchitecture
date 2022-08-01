@@ -226,6 +226,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <include layout="@layout/layout_loading_progress" android:id="@+id/layout_loading_progress"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

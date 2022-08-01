@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.devsurfer.devtodonote_cleanarchitecture.enums.WriteNoteState
 import com.devsurfer.devtodonote_cleanarchitecture.util.ListLiveData
 import com.devsurfer.domain.model.note.Note
@@ -12,20 +13,24 @@ import com.devsurfer.domain.state.ResourceState
 import com.devsurfer.devtodonote_cleanarchitecture.uiEvent.CreateNoteUiEvent
 import com.devsurfer.domain.item.DrawingBoard
 import com.devsurfer.domain.item.ReferenceLink
+import com.devsurfer.domain.model.note.NoteImage
+import com.devsurfer.domain.state.Failure
+import com.devsurfer.domain.useCase.note.CreateNoteUseCase
 import com.devsurfer.domain.useCase.note.GetLastContentIdUseCase
 import com.devsurfer.domain.util.Constants
 import com.devsurfer.domain.util.StringUtils
 import com.esafirm.imagepicker.model.Image
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.runBlocking
 import java.lang.NullPointerException
 import javax.inject.Inject
 
 @HiltViewModel
 class WriteNoteViewModel @Inject constructor(
-    private val getLastContentIdUseCase: GetLastContentIdUseCase
+    private val getLastContentIdUseCase: GetLastContentIdUseCase,
+    private val createNoteUseCase: CreateNoteUseCase
 ): ViewModel(){
 
     private var originBranch = ""
@@ -113,7 +118,18 @@ class WriteNoteViewModel @Inject constructor(
     }
 
     private fun createNote(){
-
+        _content.value?.let { content ->
+            CoroutineScope(Dispatchers.IO).launch(coroutineExceptionHandler) {
+                _submit.send(ResourceState.Loading())
+                val createNoteResult = createNoteUseCase(
+                    content = content,
+                    images = _imageList.value?.toList()?.map { NoteImage(fileId = it.id, fileName = it.name, fileUrl = it.path) } ?: emptyList(),
+                    drawingBoards = _drawingBoardList.value?.toList() ?: emptyList(),
+                    referenceLinks = _referenceLinkList.value?.toList() ?: emptyList()
+                )
+                _submit.send(createNoteResult)
+            }.runCatching {  }
+        }
     }
 
     private fun editNote(){
@@ -126,6 +142,13 @@ class WriteNoteViewModel @Inject constructor(
             "${Constants.DEFAULT_NEW_BRANCH_TITLE}-${getLastContentIdUseCase().plus(1)}"
         }catch (e: NullPointerException){
             "${Constants.DEFAULT_NEW_BRANCH_TITLE}-${StringUtils.getRandomBranchNumber()}"
+        }
+    }
+
+
+    private val coroutineExceptionHandler = CoroutineExceptionHandler{ _, exception ->
+        viewModelScope.launch {
+            _submit.send(ResourceState.Error(failure = Failure.UnHandleError(exception.message ?: "")))
         }
     }
 

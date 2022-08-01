@@ -15,4 +15,6 @@
     <color name="negative">#ff6565</color>
     <color name="gray">#606060</color>
     <color name="link">#1E90FF</color>
+    <color name="commit">#5E24FF</color>
+    <color name="merge">#0BB407</color>
 </resources>

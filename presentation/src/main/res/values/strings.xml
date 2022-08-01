@@ -41,4 +41,11 @@
 
     <string name="hint_append_link">추가하실 링크를 입력해주세요</string>
     <string name="hint_set_branch_name">변경하실 브렌치 이름을 입력해주세요.</string>
+
+    <string name="branch_commit">Commit</string>
+    <string name="branch_merge">Merge</string>
+
+    <string name="branch_commit_history">커밋 내역</string>
+
+    <string name="dummy_content">Accusamus error temporibus debitis. Laboriosam qui amet sed dolor doloribus tempore esse mollitia. Voluptas debitis laudantium officia laudantium vel velit facilis. Necessitatibus sunt maiores. Pariatur libero totam velit rerum illum rem quaerat rerum cumque. Animi rem et.</string>
 </resources>

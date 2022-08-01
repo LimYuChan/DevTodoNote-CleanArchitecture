@@ -22,7 +22,7 @@ class TodoListWrapperFragment(): BaseFragment<FragmentTodoListWrapperBinding>(R.
     override fun initUI() {
         with(binding){
             repositoryName = args.itemUserRepository.name
-            adapter = TodoListViewpagerFragmentAdapter(fragment = this@TodoListWrapperFragment, repositoryId = args.itemUserRepository.id)
+            adapter = TodoListViewpagerFragmentAdapter(fragment = this@TodoListWrapperFragment, repositoryId = args.itemUserRepository.id, repositoryName = args.itemUserRepository.name)
             viewpagerNoteState.adapter = adapter
             viewpagerNoteState.isUserInputEnabled = false
             TabLayoutMediator(tabNoteState, viewpagerNoteState){ tab, position ->

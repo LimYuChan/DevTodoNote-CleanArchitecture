@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_todoListWrapperFragment_to_writeNoteFragment"
             app:destination="@id/writeNoteFragment" />
+        <action
+            android:id="@+id/action_todoListWrapperFragment_to_todoNoteViewerFragment"
+            app:destination="@id/todoNoteViewerFragment" />
     </fragment>
     <fragment
         android:id="@+id/writeNoteFragment"
@@ -35,5 +38,19 @@
         <argument
             android:name="item_repository_id"
             app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/todoNoteViewerFragment"
+        android:name="com.devsurfer.devtodonote_cleanarchitecture.ui.fragment.TodoNoteViewerFragment"
+        android:label="TodoNoteViewerFragment" >
+        <argument
+            android:name="item_repository_name"
+            app:argType="string" />
+        <argument
+            android:name="item_note"
+            app:argType="com.devsurfer.domain.model.note.Note" />
+        <action
+            android:id="@+id/action_todoNoteViewerFragment_to_writeNoteFragment"
+            app:destination="@id/writeNoteFragment" />
     </fragment>
 </navigation>

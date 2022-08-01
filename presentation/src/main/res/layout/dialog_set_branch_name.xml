@@ -23,6 +23,7 @@
                 android:id="@+id/et_branch_name"
                 android:textSize="@dimen/body"
                 android:textColor="@color/black"
+                android:maxLength="32"
                 android:hint="@string/hint_set_branch_name"
                 android:fontFamily="@font/montserrat_alternates_regular"
                 android:background="@null"

@@ -10,7 +10,7 @@ import com.devsurfer.data.repository.note.dataSource.*
 
 @Database(
     entities = [NoteContentEntity::class, NoteImageEntity::class, NoteDrawingBoardEntity::class, NoteReferenceLinkEntity::class],
-    version = 2
+    version = 3
 )
 abstract class AppDatabase: RoomDatabase(){
     abstract fun noteDao(): NoteDao
