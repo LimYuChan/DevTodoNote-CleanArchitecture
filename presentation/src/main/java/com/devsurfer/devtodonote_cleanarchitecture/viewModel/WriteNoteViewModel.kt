@@ -17,6 +17,7 @@ import com.devsurfer.domain.model.note.NoteImage
 import com.devsurfer.domain.state.Failure
 import com.devsurfer.domain.useCase.note.CreateNoteUseCase
 import com.devsurfer.domain.useCase.note.GetLastContentIdUseCase
+import com.devsurfer.domain.useCase.note.UpdateNoteUseCase
 import com.devsurfer.domain.util.Constants
 import com.devsurfer.domain.util.StringUtils
 import com.esafirm.imagepicker.model.Image
@@ -30,7 +31,8 @@ import javax.inject.Inject
 @HiltViewModel
 class WriteNoteViewModel @Inject constructor(
     private val getLastContentIdUseCase: GetLastContentIdUseCase,
-    private val createNoteUseCase: CreateNoteUseCase
+    private val createNoteUseCase: CreateNoteUseCase,
+    private val updateNoteUseCase: UpdateNoteUseCase
 ): ViewModel(){
 
     private var originBranch = ""
@@ -128,12 +130,23 @@ class WriteNoteViewModel @Inject constructor(
                     referenceLinks = _referenceLinkList.value?.toList() ?: emptyList()
                 )
                 _submit.send(createNoteResult)
-            }.runCatching {  }
+            }
         }
     }
 
     private fun editNote(){
-
+        _content.value?.let { content ->
+            CoroutineScope(Dispatchers.IO).launch(coroutineExceptionHandler) {
+                _submit.send(ResourceState.Loading())
+                val createNoteResult = updateNoteUseCase(
+                    content = content,
+                    images = _imageList.value?.toList()?.map { NoteImage(fileId = it.id, fileName = it.name, fileUrl = it.path) } ?: emptyList(),
+                    drawingBoards = _drawingBoardList.value?.toList() ?: emptyList(),
+                    referenceLinks = _referenceLinkList.value?.toList() ?: emptyList()
+                )
+                _submit.send(createNoteResult)
+            }
+        }
     }
 
 
@@ -148,6 +161,7 @@ class WriteNoteViewModel @Inject constructor(
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler{ _, exception ->
         viewModelScope.launch {
+            Log.d(TAG, ":${exception.message} ")
             _submit.send(ResourceState.Error(failure = Failure.UnHandleError(exception.message ?: "")))
         }
     }

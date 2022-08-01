@@ -21,6 +21,7 @@
             app:navigationIcon="@drawable/ic_back"
             app:title="@{@string/appbar_title_user_repository(repository_name)}"
             app:titleTextAppearance="@style/AppBarTitleSmallStyle"
+            app:menu="@menu/more_menu"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 

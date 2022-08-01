@@ -83,7 +83,11 @@ class WriteNoteFragment : BaseFragment<FragmentWriteNoteBinding>(R.layout.fragme
         with(binding) {
             //viewModel data binding
             branch = viewModel.getNowBranch()
+            content = viewModel.content.value?.content ?:""
             //action bar
+            actionBar.setNavigationOnClickListener {
+                onBackPress()
+            }
             actionBar.setOnMenuItemClickListener {
                 if (it.itemId == R.id.menu_button_done) {
                     if (etContent.text.isNullOrBlank()) {
@@ -91,8 +95,6 @@ class WriteNoteFragment : BaseFragment<FragmentWriteNoteBinding>(R.layout.fragme
                     } else {
                         viewModel.onEvent(CreateNoteUiEvent.Submit(etContent.text.toString()))
                     }
-                }else if(it.itemId == android.R.id.home){
-                    onBackPress()
                 }
                 true
             }

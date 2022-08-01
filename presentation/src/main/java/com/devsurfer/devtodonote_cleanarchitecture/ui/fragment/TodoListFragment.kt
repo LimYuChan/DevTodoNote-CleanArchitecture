@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import com.devsurfer.devtodonote_cleanarchitecture.R
 import com.devsurfer.devtodonote_cleanarchitecture.adapter.TodoNoteAdapter
 import com.devsurfer.devtodonote_cleanarchitecture.base.BaseFragment
@@ -24,7 +25,10 @@ class TodoListFragment(
     private val viewModel: TodoListViewModel by viewModels()
 
     private val adapter = TodoNoteAdapter{
-
+        val action = TodoListWrapperFragmentDirections.actionTodoListWrapperFragmentToTodoNoteViewerFragment(itemRepositoryName = repositoryName, itemNote = it)
+        view?.let { view->
+            Navigation.findNavController(view).navigate(action)
+        }
     }
 
     override fun initData() {
@@ -44,7 +48,6 @@ class TodoListFragment(
         viewModel.getTodoList(repositoryId = repositoryId, state = todoState)
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             viewModel.todoList.collectLatest {
-                Log.d(TAG, "initListener: $it")
                 when(it){
                     is ResourceState.Success->{
                         binding.layoutLoadingProgress.root.visibility = View.GONE
