@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DevTodoNote_CleanArchitecture</string>
+    <string name="app_name">DevTodoNote</string>
 
     <string name="permission_denied_message">노트에 사진이나 스케치 정보를 추가하기 위해서는 저장소 접근 권한이 필요합니다</string>
 
@@ -49,4 +49,5 @@
     <string name="branch_commit_history">커밋 내역</string>
 
     <string name="dummy_content">Accusamus error temporibus debitis. Laboriosam qui amet sed dolor doloribus tempore esse mollitia. Voluptas debitis laudantium officia laudantium vel velit facilis. Necessitatibus sunt maiores. Pariatur libero totam velit rerum illum rem quaerat rerum cumque. Animi rem et.</string>
+    <string name="toast_complete_delete_note">Todo 메모가 삭제되었습니다.</string>
 </resources>

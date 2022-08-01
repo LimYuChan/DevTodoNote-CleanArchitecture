@@ -3,6 +3,7 @@ package com.devsurfer.data.model.note
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
@@ -10,7 +11,8 @@ import kotlinx.parcelize.Parcelize
     ForeignKey(
         entity = NoteContentEntity::class,
         parentColumns = ["content_id"],
-        childColumns = ["note_content_id"]
+        childColumns = ["note_content_id"],
+        onDelete = CASCADE
     )
 ])
 data class NoteReferenceLinkEntity(

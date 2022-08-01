@@ -20,15 +20,12 @@ import javax.inject.Inject
 @HiltViewModel
 class TodoListViewModel @Inject constructor(
     private val getTodoListUseCase: GetTodoListUseCase,
-    private val getRepositoryEventsUseCase: GetRepositoryEventsUseCase,
     private val userDataManager: UserDataManager
 ): ViewModel(){
 
     private val _todoList = Channel<ResourceState<List<Note>>>()
     val todoList = _todoList.receiveAsFlow()
 
-    private val _repositoryEvents = Channel<ResourceState<List<RepositoryEvent>>>()
-    val repositoryEvents = _repositoryEvents.receiveAsFlow()
 
     fun getTodoList(repositoryId: Int, state: TodoState){
 
@@ -37,15 +34,6 @@ class TodoListViewModel @Inject constructor(
         }.catch {
             Log.d(TAG, "getTodoList: ${it.message}")
             _todoList.send(ResourceState.Error(failure = Failure.UnHandleError(it.message ?: Constants.TOAST_ERROR_UNHANDLED)))
-        }.launchIn(viewModelScope)
-    }
-
-    fun getRepositoryEvents(repo: String){
-        getRepositoryEventsUseCase(owner = userDataManager.getUser()?.login ?: "", repo = repo).onEach {
-            _repositoryEvents.send(it)
-        }.catch {
-            Log.d(TAG, "getRepositoryEvents: ${it.message}")
-            _repositoryEvents.send(ResourceState.Error(failure = Failure.UnHandleError(it.message ?: Constants.TOAST_ERROR_UNHANDLED)))
         }.launchIn(viewModelScope)
     }
 

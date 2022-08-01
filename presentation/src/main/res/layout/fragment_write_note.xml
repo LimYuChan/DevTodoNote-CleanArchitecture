@@ -5,6 +5,9 @@
         <variable
             name="branch"
             type="String" />
+        <variable
+            name="content"
+            type="String" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -38,6 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/et_content"
+                    android:text="@{content}"
                     android:textSize="@dimen/title_small"
                     android:textColor="?android:textColorPrimary"
                     android:hint="@string/hint_input_content"
