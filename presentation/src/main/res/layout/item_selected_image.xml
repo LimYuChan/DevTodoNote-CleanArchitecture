@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="image"
+            type="com.esafirm.imagepicker.model.Image" />
+    </data>
+    <androidx.cardview.widget.CardView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginHorizontal="4dp"
+        app:cardCornerRadius="8dp"
+        android:id="@+id/item_root">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/item_image"
+            isCenterCrop="@{true}"
+            loadUrl="@{image.path}"/>
+
+    </androidx.cardview.widget.CardView>
+</layout>

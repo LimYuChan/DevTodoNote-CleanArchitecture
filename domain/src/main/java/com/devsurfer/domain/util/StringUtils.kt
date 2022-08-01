@@ -7,15 +7,23 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object StringUtils {
-    fun getRandomString(length: Int): String {
+
+    fun getRandom(length: Int): String {
         val charset = ('a'..'z') + ('A'..'Z') + ('0'..'9')
         return (1..length)
             .map { charset.random() }
             .joinToString("")
     }
-    fun getRandomBranchNumberToString(): String{
+
+    fun getRandomBranchNumber(): String{
         return IntegerUtils.rand(1000, 10000).toString()
     }
+
+    @SuppressLint("SimpleDateFormat")
+    fun getNowTimeStamp(): String{
+        return  SimpleDateFormat("yyyyMMdd_hhmmss").format(Date(System.currentTimeMillis()))
+    }
+
     @SuppressLint("SimpleDateFormat")
     fun String.convertCurrentDateTime(): String{
         val receiveFormat = SimpleDateFormat(Constants.FORMAT_RECEIVE_DATE_TIME)

@@ -8,6 +8,8 @@ object NoteImageMapper {
         NoteImage(
             id = entity.image_id,
             noteContentId = entity.note_content_id,
+            fileId = entity.file_id,
+            fileName = entity.file_name,
             fileUrl = entity.file_url
         )
 
@@ -15,6 +17,8 @@ object NoteImageMapper {
         NoteImageEntity(
             image_id = model.id,
             note_content_id = model.noteContentId,
+            file_id = model.fileId,
+            file_name = model.fileName,
             file_url = model.fileUrl
         )
 }

@@ -78,4 +78,8 @@ dependencies {
     annotationProcessor(Dependencies.Glide.GlideCompiler)
 
     implementation(Dependencies.Permission.TedPermission)
+
+    implementation(Dependencies.ImagePicker.EsafirmPicker)
+
+    implementation(Dependencies.Gson.Gson)
 }

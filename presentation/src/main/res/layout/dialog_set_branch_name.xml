@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="dialog"
+            type="com.devsurfer.devtodonote_cleanarchitecture.ui.dialog.SetBranchNameDialog" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="20dp"
+        app:cardBackgroundColor="@color/white"
+        android:layout_marginHorizontal="@dimen/standard_horizontal_margin">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_branch_name"
+                android:textSize="@dimen/body"
+                android:textColor="@color/black"
+                android:maxLength="32"
+                android:hint="@string/hint_set_branch_name"
+                android:fontFamily="@font/montserrat_alternates_regular"
+                android:background="@null"
+                android:inputType="text"
+                android:layout_marginHorizontal="@dimen/standard_horizontal_margin"
+                android:layout_marginTop="@dimen/large_spacer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="@dimen/standard_button_height"
+                android:id="@+id/button_reset"
+                android:background="@android:color/transparent"
+                android:text="@string/reset"
+                android:fontFamily="@font/montserrat_alternates_bold"
+                android:textColor="@color/negative"
+                android:layout_marginTop="@dimen/large_spacer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/button_done"
+                app:layout_constraintTop_toBottomOf="@id/et_branch_name"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="@dimen/standard_button_height"
+                android:id="@+id/button_done"
+                android:background="@android:color/transparent"
+                android:text="@string/done"
+                android:fontFamily="@font/montserrat_alternates_bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="@dimen/large_spacer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/button_reset"
+                app:layout_constraintTop_toBottomOf="@id/et_branch_name"/>
+
+            <include layout="@layout/layout_loading_progress" android:id="@+id/layout_loading_progress"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

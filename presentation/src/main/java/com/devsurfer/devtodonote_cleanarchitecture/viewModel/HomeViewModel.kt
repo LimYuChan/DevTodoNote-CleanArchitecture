@@ -37,7 +37,6 @@ class HomeViewModel @Inject constructor(
                 if(this == null){
                     _userData.value = ResourceState.Error(failure = Failure.UnAuthorizeUser)
                 }else{
-                    Log.d(TAG, "loadUserData: $this")
                     _userData.value = ResourceState.Success(data = this)
                     getUserRepositories()
                 }

@@ -7,5 +7,8 @@ import kotlinx.parcelize.Parcelize
 data class NoteReferenceLink(
     val id: Long = 0,
     val noteContentId: Long,
+    val title: String? = null,
+    val description: String? = null,
+    val image: String? = null,
     val link: String
 ): Parcelable

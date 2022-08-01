@@ -12,4 +12,9 @@
     <color name="progress_background_color">#40000000</color>
     <color name="repo_public_color">#48bb78</color>
     <color name="standard_divider_color">#f8f8f8</color>
+    <color name="negative">#ff6565</color>
+    <color name="gray">#606060</color>
+    <color name="link">#1E90FF</color>
+    <color name="commit">#5E24FF</color>
+    <color name="merge">#0BB407</color>
 </resources>

@@ -5,8 +5,18 @@
       <map>
         <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/drawable/ic_action_menu_more.xml" value="0.2495" />
         <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/drawable/ic_action_menu_search.xml" value="0.2495" />
+        <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/drawable/ic_add_drawing_board.xml" value="0.222" />
+        <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/drawable/ic_add_image.xml" value="0.222" />
+        <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/drawable/ic_back.xml" value="0.222" />
+        <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/drawable/ic_branch.xml" value="0.222" />
         <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/drawable/ic_close.xml" value="0.2365" />
+        <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/drawable/ic_done_drawing_board.xml" value="0.222" />
         <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/drawable/ic_github.xml" value="0.2495" />
+        <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/drawable/ic_refresh_drawaing_board.xml" value="0.222" />
+        <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/drawable/ic_remove_last_path.xml" value="0.222" />
+        <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/drawable/ic_save_drawing_board.xml" value="0.222" />
+        <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/drawable/ic_selected_color.xml" value="0.222" />
+        <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/drawable/oval_drawing_pallate.xml" value="0.222" />
         <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/drawable/oval_language.xml" value="0.2495" />
         <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/drawable/shape_tab_layout_indicator.xml" value="0.222" />
         <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/drawable/solid_rectangle_corner_12.xml" value="0.2495" />
@@ -14,14 +24,26 @@
         <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/layout/activity_login.xml" value="0.346875" />
         <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/layout/activity_main.xml" value="0.34791666666666665" />
         <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/layout/activity_splash.xml" value="0.3416666666666667" />
+        <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/layout/bottom_sheet_action_more.xml" value="0.346875" />
+        <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/layout/bottom_sheet_append_link.xml" value="0.34791666666666665" />
+        <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/layout/bottom_sheet_drawing_board.xml" value="0.3425641025641026" />
         <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/layout/bottom_sheet_open_user_profile.xml" value="0.346875" />
+        <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/layout/dialog_append_link.xml" value="0.34791666666666665" />
+        <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/layout/dialog_set_branch_name.xml" value="0.346875" />
         <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/layout/fragment_create_note.xml" value="0.34791666666666665" />
         <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/layout/fragment_home.xml" value="0.346875" />
         <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/layout/fragment_todo_list.xml" value="0.34791666666666665" />
         <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/layout/fragment_todo_list_wrapper.xml" value="0.16927083333333334" />
+        <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/layout/fragment_todo_note_viewer.xml" value="0.34791666666666665" />
+        <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/layout/fragment_write_note.xml" value="0.16927083333333334" />
+        <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/layout/item_reference_link.xml" value="0.67" />
         <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/layout/item_repository.xml" value="0.346875" />
+        <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/layout/item_selected_drawing_board.xml" value="0.34791666666666665" />
+        <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/layout/item_selected_image.xml" value="0.3425641025641026" />
+        <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/layout/item_todo_note.xml" value="0.34791666666666665" />
         <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/layout/layout_loading_progress.xml" value="0.34791666666666665" />
         <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/menu/search_more_menu.xml" value="0.34791666666666665" />
+        <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/menu/working_done_menu.xml" value="0.346875" />
         <entry key="..\:/Users/Administrator/Documents/GitHub/DevTodoNote-CleanArchitecture/presentation/src/main/res/xml/network_security_config.xml" value="0.16927083333333334" />
       </map>
     </option>

@@ -8,13 +8,19 @@ object NoteReferenceLinkMapper {
         NoteReferenceLink(
             id = entity.note_reference_link_id,
             noteContentId = entity.note_content_id,
-            link = entity.link
+            link = entity.link,
+            title = entity.title,
+            description = entity.description,
+            image = entity.image
         )
 
     fun mapperToEntity(model: NoteReferenceLink): NoteReferenceLinkEntity =
         NoteReferenceLinkEntity(
             note_reference_link_id = model.id,
             note_content_id = model.noteContentId,
-            link = model.link
+            link = model.link,
+            title = model.title,
+            description = model.description,
+            image = model.image
         )
 }

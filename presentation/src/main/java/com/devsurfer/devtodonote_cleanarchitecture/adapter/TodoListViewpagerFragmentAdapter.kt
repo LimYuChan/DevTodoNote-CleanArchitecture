@@ -8,15 +8,16 @@ import com.devsurfer.domain.enums.TodoState
 
 class TodoListViewpagerFragmentAdapter(
     val fragment: Fragment,
-    private val repositoryId: Int
+    private val repositoryId: Int,
+    private val repositoryName: String
 ): FragmentStateAdapter(fragment){
 
     override fun getItemCount(): Int = TodoListWrapperFragment.tabList.size
 
     override fun createFragment(position: Int): Fragment =
         when(position){
-            1 -> TodoListFragment(TodoState.TODO, repositoryId)
-            2 -> TodoListFragment(TodoState.DONE, repositoryId)
-            else -> TodoListFragment(TodoState.VISIBLE_ALL, repositoryId)
+            1 -> TodoListFragment(TodoState.TODO, repositoryId, repositoryName)
+            2 -> TodoListFragment(TodoState.DONE, repositoryId, repositoryName)
+            else -> TodoListFragment(TodoState.VISIBLE_ALL, repositoryId, repositoryName)
         }
 }

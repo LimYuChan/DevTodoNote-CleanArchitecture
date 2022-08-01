@@ -8,13 +8,15 @@ object NoteDrawingBoardMapper {
         NoteDrawingBoard(
             id = entity.drawing_board_id,
             noteContentId = entity.note_content_id,
-            fileUrl = entity.file_url
+            fileJsonString = entity.file_json_string,
+            fileImageUrl = entity.file_image_url
         )
 
     fun mapperToEntity(model: NoteDrawingBoard): NoteDrawingBoardEntity =
         NoteDrawingBoardEntity(
             drawing_board_id = model.id,
             note_content_id = model.noteContentId,
-            file_url = model.fileUrl
+            file_json_string = model.fileJsonString,
+            file_image_url = model.fileImageUrl
         )
 }

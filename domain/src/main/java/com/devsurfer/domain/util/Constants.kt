@@ -15,4 +15,6 @@ object Constants {
 
     const val FORMAT_RECEIVE_DATE_TIME = "yyyy-MM-DD'T'HH:mm:ss'Z'"
     const val FORMAT_CONVERT_DATE_TIME = "yyyy-MM-DD HH:mm"
+
+    const val DEFAULT_NEW_BRANCH_TITLE = "WORK"
 }
