@@ -14,4 +14,3 @@
 * Retrofit
 
 <h3> 로그인 </h3>
-![login](./screenshot/login.jpg)
