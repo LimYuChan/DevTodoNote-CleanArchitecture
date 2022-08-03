@@ -1,8 +1,8 @@
 ## DevTodoNote
 
-###Github repository별 Todo List를 관리 할 수 있는 앱 입니다.
+<h2>Github repository별 Todo List를 관리 할 수 있는 앱 입니다.</h2>
 
-#기술스택
+<h3>기술스택</h3>
 
 * Kotlin
 * MVVM
@@ -13,3 +13,5 @@
 * Lottie
 * Retrofit
 
+<h3> 로그인 </h3>
+![login](./screenshot/login.jpg)
