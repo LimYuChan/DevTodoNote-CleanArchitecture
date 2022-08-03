@@ -18,3 +18,7 @@
 |로그인 화면|Github 로그인|
 |:---:|:---:|
 |![login](./screenshot/login.jpg)|![github_login](./screenshot/github_login.jpg)|
+
+
+<h3> Github Repository 가져오기 </h3>
+<img src="./screenshot/repository.jpg" width="30%"/>
