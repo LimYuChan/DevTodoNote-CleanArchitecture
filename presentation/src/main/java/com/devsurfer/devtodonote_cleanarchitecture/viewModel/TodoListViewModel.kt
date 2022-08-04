@@ -3,6 +3,7 @@ package com.devsurfer.devtodonote_cleanarchitecture.viewModel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devsurfer.devtodonote_cleanarchitecture.base.BaseViewModel
 import com.devsurfer.domain.enums.TodoState
 import com.devsurfer.domain.manager.UserDataManager
 import com.devsurfer.domain.model.note.Note
@@ -21,7 +22,7 @@ import javax.inject.Inject
 class TodoListViewModel @Inject constructor(
     private val getTodoListUseCase: GetTodoListUseCase,
     private val userDataManager: UserDataManager
-): ViewModel(){
+): BaseViewModel(){
 
     private val _todoList = Channel<ResourceState<List<Note>>>()
     val todoList = _todoList.receiveAsFlow()
@@ -34,7 +35,7 @@ class TodoListViewModel @Inject constructor(
         }.catch {
             Log.d(TAG, "getTodoList: ${it.message}")
             _todoList.send(ResourceState.Error(failure = Failure.UnHandleError(it.message ?: Constants.TOAST_ERROR_UNHANDLED)))
-        }.launchIn(viewModelScope)
+        }.launchIn(modelScope)
     }
 
     companion object{

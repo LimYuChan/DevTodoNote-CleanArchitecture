@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devsurfer.devtodonote_cleanarchitecture.base.BaseViewModel
 import com.devsurfer.domain.manager.UserDataManager
 import com.devsurfer.domain.model.userData.User
 import com.devsurfer.domain.model.userData.UserRepository
@@ -23,7 +24,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getRepositoriesUseCase: GetUserRepositoriesUseCase,
     private val userDataManager: UserDataManager
-): ViewModel(){
+): BaseViewModel(){
 
     private val _repositories = Channel<ResourceState<List<UserRepository>>>()
     val repositories = _repositories.receiveAsFlow()
@@ -32,7 +33,7 @@ class HomeViewModel @Inject constructor(
 
 
     fun loadUserData(){
-        viewModelScope.launch {
+        modelScope.launch {
             userDataManager.getUserWithUpdate().apply {
                 if(this == null){
                     _userData.value = ResourceState.Error(failure = Failure.UnAuthorizeUser)
@@ -50,7 +51,7 @@ class HomeViewModel @Inject constructor(
         }.catch { exception ->
             Log.e(TAG, "casedBy: ${exception.message}")
             _repositories.send(ResourceState.Error(failure = Failure.UnHandleError(exception.message ?: "")))
-        }.launchIn(viewModelScope)
+        }.launchIn(modelScope)
     }
 
     companion object{

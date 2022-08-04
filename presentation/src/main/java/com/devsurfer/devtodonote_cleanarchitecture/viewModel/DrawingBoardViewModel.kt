@@ -3,6 +3,7 @@ package com.devsurfer.devtodonote_cleanarchitecture.viewModel
 import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devsurfer.devtodonote_cleanarchitecture.base.BaseViewModel
 import com.devsurfer.domain.item.DrawingBoard
 import com.devsurfer.domain.item.DrawingPoint
 import com.devsurfer.domain.state.Failure
@@ -18,13 +19,13 @@ import javax.inject.Inject
 @HiltViewModel
 class DrawingBoardViewModel @Inject constructor(
     private val bitmapSaveUseCase: SaveBitmapToImageUseCase
-): ViewModel() {
+): BaseViewModel() {
 
     private val _saveState = Channel<ResourceState<DrawingBoard>>()
     val saveState = _saveState.receiveAsFlow()
 
     fun saveDrawingBoard(pathPointList: List<DrawingPoint>, canvasScreenShot: Bitmap){
-        CoroutineScope(Dispatchers.IO).launch(coroutineExceptionHandler){
+        modelScope.launch(coroutineExceptionHandler){
             _saveState.send(ResourceState.Loading())
             val pathPointSaveJob =
                 withContext(Dispatchers.Default) {
@@ -44,7 +45,7 @@ class DrawingBoardViewModel @Inject constructor(
     }
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler{ _, exception ->
-        viewModelScope.launch {
+        modelScope.launch {
             _saveState.send(ResourceState.Error(failure = Failure.UnHandleError(exception.message ?: "")))
         }
     }

@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devsurfer.devtodonote_cleanarchitecture.base.BaseViewModel
 import com.devsurfer.domain.enums.BranchState
 import com.devsurfer.domain.enums.TodoState
 import com.devsurfer.domain.manager.UserDataManager
@@ -28,7 +29,7 @@ class TodoNoteViewerViewModel @Inject constructor(
     private val deleteNoteUseCase: DeleteNoteUseCase,
     private val userDataManager: UserDataManager,
     private val updateNoteContentUseCase: UpdateNoteContentUseCase
-): ViewModel(){
+): BaseViewModel(){
 
     private val _note = MutableLiveData<Note>()
     val note: LiveData<Note> get() = _note
@@ -42,7 +43,7 @@ class TodoNoteViewerViewModel @Inject constructor(
 
     fun getNoteData(){
         _note.value?.let { oldNote->
-            viewModelScope.launch{
+            modelScope.launch{
                 getNoteUseCase(oldNote.content.contentId)?.let { newNote ->
                     _note.value = newNote
                 }
@@ -52,7 +53,7 @@ class TodoNoteViewerViewModel @Inject constructor(
 
     fun deleteNote(){
         _note.value?.let {
-            viewModelScope.launch(coroutineExceptionHandler) {
+            modelScope.launch(coroutineExceptionHandler) {
                 _deleteState.send(ResourceState.Loading())
                 val deleteCount = async {
                     deleteNoteUseCase(it.content.contentId)
@@ -68,7 +69,7 @@ class TodoNoteViewerViewModel @Inject constructor(
     
     fun updateBranchState(repo: String){
         _note.value?.let {
-            viewModelScope.launch{
+            modelScope.launch{
                 val result = getBranchEventUseCase(owner = userDataManager.getUser()?.login ?: "", repo = repo, branchName = it.content.branch ?: "")
                 if(result is ResourceState.Success){
                     _note.value?.content?.let {
@@ -85,7 +86,7 @@ class TodoNoteViewerViewModel @Inject constructor(
     }
     
     private val coroutineExceptionHandler = CoroutineExceptionHandler{ _, exception ->
-        viewModelScope.launch {
+        modelScope.launch {
             Log.d(TAG, ":${exception.message} ")
             _deleteState.send(ResourceState.Error(failure = Failure.UnHandleError(exception.message ?: "")))
         }

@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devsurfer.devtodonote_cleanarchitecture.base.BaseViewModel
 import com.devsurfer.devtodonote_cleanarchitecture.enums.WriteNoteState
 import com.devsurfer.devtodonote_cleanarchitecture.util.ListLiveData
 import com.devsurfer.domain.model.note.Note
@@ -33,7 +34,7 @@ class WriteNoteViewModel @Inject constructor(
     private val getLastContentIdUseCase: GetLastContentIdUseCase,
     private val createNoteUseCase: CreateNoteUseCase,
     private val updateNoteUseCase: UpdateNoteUseCase
-): ViewModel(){
+): BaseViewModel(){
 
     private var originBranch = ""
 
@@ -121,7 +122,7 @@ class WriteNoteViewModel @Inject constructor(
 
     private fun createNote(){
         _content.value?.let { content ->
-            CoroutineScope(Dispatchers.IO).launch(coroutineExceptionHandler) {
+            modelScope.launch(coroutineExceptionHandler) {
                 _submit.send(ResourceState.Loading())
                 val createNoteResult = createNoteUseCase(
                     content = content,
@@ -136,7 +137,7 @@ class WriteNoteViewModel @Inject constructor(
 
     private fun editNote(){
         _content.value?.let { content ->
-            CoroutineScope(Dispatchers.IO).launch(coroutineExceptionHandler) {
+            modelScope.launch(coroutineExceptionHandler) {
                 _submit.send(ResourceState.Loading())
                 val createNoteResult = updateNoteUseCase(
                     content = content,
