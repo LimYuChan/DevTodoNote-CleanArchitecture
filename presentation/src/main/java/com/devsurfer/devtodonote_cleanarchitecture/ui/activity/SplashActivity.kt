@@ -2,6 +2,7 @@ package com.devsurfer.devtodonote_cleanarchitecture.ui.activity
 
 import android.Manifest
 import android.content.Intent
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -57,5 +58,12 @@ class SplashActivity: BaseActivity<ActivitySplashBinding>(R.layout.activity_spla
     
     companion object{
         private const val TAG = "SplashActivity"
+    }
+
+    override fun initObserver() {
+        viewModel.loading.observe(this) {
+            if (it) binding.layoutLoadingProgress.root.visibility = View.VISIBLE
+            else binding.layoutLoadingProgress.root.visibility = View.GONE
+        }
     }
 }

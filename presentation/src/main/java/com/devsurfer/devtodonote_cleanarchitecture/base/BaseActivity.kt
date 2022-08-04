@@ -17,6 +17,7 @@ abstract class BaseActivity<T: ViewDataBinding>(
         binding = DataBindingUtil.setContentView(this, layoutRes)
         initData()
         initUI()
+        initObserver()
         initListener()
     }
 
@@ -24,6 +25,8 @@ abstract class BaseActivity<T: ViewDataBinding>(
     abstract fun initData()
     abstract fun initUI()
     abstract fun initListener()
+    // 2022.08.05 loading 과 LiveData 를 처리할 함수. by. jaehyeon
+    abstract fun initObserver()
 
     protected fun showShortToast(message: String?) =
         Toast.makeText(this, message ?: "", Toast.LENGTH_SHORT).show()

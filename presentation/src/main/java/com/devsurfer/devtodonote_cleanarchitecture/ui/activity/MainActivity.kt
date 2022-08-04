@@ -27,4 +27,8 @@ class MainActivity: BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun initListener() {
 
     }
+
+    override fun initObserver() {
+
+    }
 }
