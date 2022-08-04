@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.devsurfer.devtodonote_cleanarchitecture.BuildConfig
 import com.devsurfer.devtodonote_cleanarchitecture.util.Event
 import kotlinx.coroutines.*
-import java.net.UnknownHostException
 
 /**
  * Created by Jaehyeon on 2022/08/05.
