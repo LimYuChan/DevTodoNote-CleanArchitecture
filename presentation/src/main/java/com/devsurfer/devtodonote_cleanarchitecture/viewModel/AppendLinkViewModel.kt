@@ -1,6 +1,7 @@
 package com.devsurfer.devtodonote_cleanarchitecture.viewModel
 
 import androidx.lifecycle.ViewModel
+import com.devsurfer.devtodonote_cleanarchitecture.base.BaseViewModel
 import com.devsurfer.domain.item.ReferenceLink
 import com.devsurfer.domain.state.ResourceState
 import com.devsurfer.domain.useCase.note.LinkParseUseCase
@@ -15,13 +16,13 @@ import javax.inject.Inject
 @HiltViewModel
 class AppendLinkViewModel @Inject constructor(
     private val useCase: LinkParseUseCase
-): ViewModel(){
+): BaseViewModel(){
 
     private val _linkParseState = Channel<ResourceState<ReferenceLink>>()
     val linkParseState = _linkParseState.receiveAsFlow()
 
     fun parseLink(link: String){
-        CoroutineScope(Dispatchers.IO).launch {
+        modelScope.launch {
             _linkParseState.send(ResourceState.Loading())
             _linkParseState.send(useCase(link = link))
         }

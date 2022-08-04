@@ -4,15 +4,24 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_progress"
-    android:visibility="gone"
+    android:visibility="visible"
     android:background="@color/progress_background_color"
     android:clickable="true"
     android:focusable="true">
-    <ProgressBar
-        android:layout_width="wrap_content"
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_layer_guide"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginHorizontal="@dimen/standard_horizontal_margin"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/lottie_loading" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

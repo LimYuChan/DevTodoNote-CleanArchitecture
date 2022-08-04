@@ -2,11 +2,15 @@ package com.devsurfer.devtodonote_cleanarchitecture.viewModel
 
 import android.net.Uri
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devsurfer.data.BuildConfig
 import com.devsurfer.data.manager.PreferenceManager
 import com.devsurfer.data.util.GithubApiInterceptor
+import com.devsurfer.devtodonote_cleanarchitecture.base.BaseViewModel
+import com.devsurfer.devtodonote_cleanarchitecture.base.BaseViewModelState
+import com.devsurfer.devtodonote_cleanarchitecture.util.Event
 import com.devsurfer.domain.state.Failure
 import com.devsurfer.domain.state.ResourceState
 import com.devsurfer.domain.useCase.auth.GetAccessTokenUseCase
@@ -21,7 +25,7 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val useCase: GetAccessTokenUseCase,
     private val preferenceManager: PreferenceManager
-): ViewModel(){
+): BaseViewModel(){
     /**
      * loginStateKey = Github 로그인 방식이 Web으로 보낸 후 redirection 해주는 방식인데
      * redirect 과정에서 위변조가 있을수도 있기 때문에 보안을 위해 임의의 문자열 state를 저장해놓고 로그인 결과값과 비교하는게 좋을 것 같다.
@@ -30,6 +34,8 @@ class LoginViewModel @Inject constructor(
     private val _loginState = Channel<ResourceState<Unit>>()
     val loginState = _loginState.receiveAsFlow()
 
+    val loading: LiveData<Boolean> get() = isLoading
+    val errorEvent: LiveData<Event<BaseViewModelState>> get() = error
 
     private var loginStateKey =""
 
@@ -55,23 +61,26 @@ class LoginViewModel @Inject constructor(
                 when(it){
                     is ResourceState.Success->{
                         updateAccessToken(it.data.accessToken)
+                        isLoading.postValue(false)
                     }
                     is ResourceState.Error->{
                         _loginState.send(ResourceState.Error(failure = it.failure))
+                        isLoading.postValue(false)
                     }
                     else->{
-                        _loginState.send(ResourceState.Loading())
+                        isLoading.postValue(true)
+//                        _loginState.send(ResourceState.Loading())
                     }
                 }
             }.catch { exception ->
                 Log.e(TAG, "casedBy: ${exception.message}")
                 _loginState.send(ResourceState.Error(failure = Failure.UnHandleError(exception.message ?: "")))
-            }.launchIn(viewModelScope)
+            }.launchIn(modelScope)
         }
     }
 
     private fun updateAccessToken(accessToken: String){
-        viewModelScope.launch {
+        modelScope.launch {
             _loginState.send(
                 if(preferenceManager.updateAccessToken(accessToken)){
                     ResourceState.Success(Unit)

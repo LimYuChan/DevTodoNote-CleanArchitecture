@@ -8,7 +8,9 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.lifecycleScope
 import com.devsurfer.devtodonote_cleanarchitecture.R
 import com.devsurfer.devtodonote_cleanarchitecture.base.BaseActivity
+import com.devsurfer.devtodonote_cleanarchitecture.base.BaseViewModelState
 import com.devsurfer.devtodonote_cleanarchitecture.databinding.ActivityLoginBinding
+import com.devsurfer.devtodonote_cleanarchitecture.util.EventObserver
 import com.devsurfer.devtodonote_cleanarchitecture.viewModel.LoginViewModel
 import com.devsurfer.domain.state.ResourceState
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,16 +35,16 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(R.layout.activity_login)
             viewModel.loginState.collectLatest {
                 when(it){
                     is ResourceState.Success->{
-                        binding.layoutLoadingProgress.root.visibility = View.GONE
+//                        binding.layoutLoadingProgress.root.visibility = View.GONE
                         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                         finish()
                     }
                     is ResourceState.Error->{
-                        binding.layoutLoadingProgress.root.visibility = View.GONE
+//                        binding.layoutLoadingProgress.root.visibility = View.GONE
                         showShortToast(it.failure.message)
                     }
                     else ->{
-                        binding.layoutLoadingProgress.root.visibility = View.VISIBLE
+//                        binding.layoutLoadingProgress.root.visibility = View.VISIBLE
                     }
                 }
             }
@@ -69,5 +71,20 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(R.layout.activity_login)
 
     companion object{
         private const val TAG = "LoginActivity"
+    }
+
+    override fun initObserver() {
+        viewModel.loading.observe(this) {
+            if (it) binding.layoutLoadingProgress.root.visibility = View.VISIBLE
+            else binding.layoutLoadingProgress.root.visibility = View.GONE
+        }
+
+        viewModel.errorEvent.observe(this, EventObserver {
+            when (it) {
+                is BaseViewModelState.UnknownErrorState -> {
+                    //todo 에러처리에 관련한 곳은 이리로.
+                }
+            }
+        })
     }
 }
