@@ -19,9 +19,15 @@ import com.devsurfer.domain.useCase.userData.GetBranchEventUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
+import java.lang.Error
 import javax.inject.Inject
 
+/**
+ * Update by Yuchan 2022.08.09
+ */
 @HiltViewModel
 class TodoNoteViewerViewModel @Inject constructor(
     private val getBranchEventUseCase: GetBranchEventUseCase,
@@ -69,19 +75,23 @@ class TodoNoteViewerViewModel @Inject constructor(
     
     fun updateBranchState(repo: String){
         _note.value?.let {
-            modelScope.launch{
-                val result = getBranchEventUseCase(owner = userDataManager.getUser()?.login ?: "", repo = repo, branchName = it.content.branch ?: "")
-                if(result is ResourceState.Success){
-                    _note.value?.content?.let {
-                        withContext(Dispatchers.Default) {
+            getBranchEventUseCase(owner = userDataManager.getUser()?.login ?: "", repo = repo, branchName = it.content.branch ?: "")
+                .onEach { result ->
+                    when(result){
+                        is ResourceState.Success->{
                             updateNoteContentUseCase(
-                                it.copy(branchState = result.data.value, status = if(result.data.value != BranchState.NONE.value) TodoState.DONE.value else TodoState.TODO.value)
+                                it.content.copy(branchState = result.data.value, status = if(result.data.value != BranchState.NONE.value) TodoState.DONE.value else TodoState.TODO.value)
                             )
+                            getNoteData()
                         }
-                        getNoteData()
+                        is ResourceState.Error->{
+                            //todo 에러 핸들러 통합 작업 예정
+                        }
+                        else->{
+                            //todo 로딩 핸들러 통합 예정
+                        }
                     }
-                }
-            }
+                }.launchIn(modelScope)
         }
     }
     

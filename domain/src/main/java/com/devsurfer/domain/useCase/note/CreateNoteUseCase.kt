@@ -14,10 +14,16 @@ import com.devsurfer.domain.repository.note.NoteReferenceLinkRepository
 import com.devsurfer.domain.state.Failure
 import com.devsurfer.domain.state.ResourceState
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import java.io.IOException
 import javax.inject.Inject
 
+/**
+ * Update by Yuchan 2022.08.09
+ */
 class CreateNoteUseCase @Inject constructor(
     private val contentRepository: NoteContentRepository,
     private val imageRepository: NoteImageRepository,
@@ -30,38 +36,36 @@ class CreateNoteUseCase @Inject constructor(
         images: List<NoteImage>,
         drawingBoards: List<DrawingBoard>,
         referenceLinks: List<ReferenceLink>
-    ): ResourceState<Unit> = runBlocking(Dispatchers.Unconfined) {
-
-        val contentId = withContext(Dispatchers.Unconfined) {
+    ): Flow<ResourceState<Unit>> = flow {
+        val contentId = withContext(Dispatchers.IO) {
             val nowTime = System.currentTimeMillis()
             contentRepository.insertNoteContent(content.copy(createdAt = nowTime, updatedAt = nowTime))
         }
 
         if (contentId <= 0) {
-            return@runBlocking ResourceState.Error(failure = Failure.UnHandleError())
+            emit(ResourceState.Error(failure = Failure.UnHandleError()))
         } else {
-            val saveImageIds = withContext(Dispatchers.Unconfined) {
-                imageRepository.insertImages(*images.map {
-                    it.copy(noteContentId = contentId)
-                }.toTypedArray())
-            }
-            val saveDrawingBoardIds = withContext(Dispatchers.Unconfined){
-                drawingBoardRepository.insertBoards(*drawingBoards.map {
-                    NoteDrawingBoard(noteContentId = contentId, fileJsonString = it.fileJsonString, fileImageUrl = it.fileImageUrl)
-                }.toTypedArray())
-            }
-            val saveReferenceLinkIds = withContext(Dispatchers.Unconfined){
-                referenceLinkRepository.insertLinks(*referenceLinks.map {
-                    NoteReferenceLink(noteContentId = contentId, title = it.title, description = it.description, image = it.image, link = it.url ?: "")
-                }.toTypedArray())
-            }
+            imageRepository.insertImages(*images.map { it.copy(noteContentId = contentId) }.toTypedArray())
 
-            //모든 데이터들이 업데이트 완료 되었는지 체크
-            if(saveImageIds.size == images.size && saveDrawingBoardIds.size == drawingBoards.size && saveReferenceLinkIds.size == referenceLinks.size){
-                return@runBlocking ResourceState.Success(Unit)
-            }else{
-                return@runBlocking ResourceState.Error(failure = Failure.UnHandleError())
-            }
+            drawingBoardRepository.insertBoards(*drawingBoards.map {
+                NoteDrawingBoard(
+                    noteContentId = contentId,
+                    fileJsonString = it.fileJsonString,
+                    fileImageUrl = it.fileImageUrl
+                )
+            }.toTypedArray())
+
+            referenceLinkRepository.insertLinks(*referenceLinks.map {
+                NoteReferenceLink(
+                    noteContentId = contentId,
+                    title = it.title,
+                    description = it.description,
+                    image = it.image,
+                    link = it.url ?: ""
+                )
+            }.toTypedArray())
+
+            emit(ResourceState.Success(Unit))
         }
     }
 

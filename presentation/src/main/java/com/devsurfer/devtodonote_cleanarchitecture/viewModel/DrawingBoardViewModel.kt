@@ -19,32 +19,33 @@ import javax.inject.Inject
 @HiltViewModel
 class DrawingBoardViewModel @Inject constructor(
     private val bitmapSaveUseCase: SaveBitmapToImageUseCase
-): BaseViewModel() {
+) : BaseViewModel() {
 
     private val _saveState = Channel<ResourceState<DrawingBoard>>()
     val saveState = _saveState.receiveAsFlow()
 
-    fun saveDrawingBoard(pathPointList: List<DrawingPoint>, canvasScreenShot: Bitmap){
-        modelScope.launch(coroutineExceptionHandler){
+    fun saveDrawingBoard(pathPointList: List<DrawingPoint>, canvasScreenShot: Bitmap) {
+        modelScope.launch(coroutineExceptionHandler) {
             _saveState.send(ResourceState.Loading())
-            val pathPointSaveJob =
-                withContext(Dispatchers.Default) {
-                    Gson().toJson(pathPointList)
-                }
-            val canvasImageSaveJob =
-                withContext(Dispatchers.Default) {
-                    bitmapSaveUseCase.invoke(canvasScreenShot)
-                }
+            val pathPointSaveJob = Gson().toJson(pathPointList)
+            val canvasImageSaveJob = bitmapSaveUseCase.invoke(canvasScreenShot)
 
-            if(pathPointSaveJob.isNullOrBlank() || canvasImageSaveJob.isNullOrBlank()){
+            if (pathPointSaveJob.isNullOrBlank() || canvasImageSaveJob is ResourceState.Error) {
                 _saveState.send(ResourceState.Error(failure = Failure.UnHandleError()))
-            }else{
-                _saveState.send(ResourceState.Success(data = DrawingBoard(fileJsonString = pathPointSaveJob, fileImageUrl = canvasImageSaveJob)))
+            } else {
+                _saveState.send(
+                    ResourceState.Success(
+                        data = DrawingBoard(
+                            fileJsonString = pathPointSaveJob,
+                            fileImageUrl = (canvasImageSaveJob as ResourceState.Success).data
+                        )
+                    )
+                )
             }
         }
     }
 
-    private val coroutineExceptionHandler = CoroutineExceptionHandler{ _, exception ->
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
         modelScope.launch {
             _saveState.send(ResourceState.Error(failure = Failure.UnHandleError(exception.message ?: "")))
         }

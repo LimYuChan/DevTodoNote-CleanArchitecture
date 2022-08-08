@@ -9,6 +9,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,8 +26,11 @@ class AppendLinkViewModel @Inject constructor(
 
     fun parseLink(link: String){
         modelScope.launch {
-            _linkParseState.send(ResourceState.Loading())
-            _linkParseState.send(useCase(link = link))
+            useCase.invoke(link).onStart {
+                _linkParseState.send(ResourceState.Loading())
+            }.onEach {
+                _linkParseState.send(it)
+            }.launchIn(modelScope)
         }
     }
 }

@@ -6,9 +6,14 @@ import com.devsurfer.domain.model.userData.RepositoryEvent
 import com.devsurfer.domain.repository.userData.UserDataRepository
 import com.devsurfer.domain.state.ResourceState
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import java.util.*
 import javax.inject.Inject
 
+/**
+ * Update by Yuchan 2022.08.09
+ */
 class GetBranchEventUseCase @Inject constructor(
     private val repository: UserDataRepository
 ) {
@@ -16,8 +21,8 @@ class GetBranchEventUseCase @Inject constructor(
         owner: String,
         repo: String,
         branchName: String
-    ): ResourceState<BranchState> = runBlocking(Dispatchers.IO) {
-        val result = withContext(Dispatchers.Default) {
+    ): Flow<ResourceState<BranchState>> = flow {
+        val result = withContext(Dispatchers.IO) {
             repository.getUserRepositoryEvents(
                 owner,
                 repo
@@ -25,21 +30,24 @@ class GetBranchEventUseCase @Inject constructor(
         }
         when (result) {
             is ResourceState.Success -> {
-                return@runBlocking isMerge(result.data, branchName)
+                val isMergeResult = withContext(Dispatchers.Default){
+                    isMerge(result.data, branchName)
+                }
+                emit(isMergeResult)
             }
             is ResourceState.Error -> {
-                return@runBlocking ResourceState.Error(failure = result.failure)
+                emit(ResourceState.Error(failure = result.failure))
             }
-            else -> {
-                return@runBlocking ResourceState.Loading()
+            else->{
+
             }
         }
     }
 
-    private fun isMerge(
+    private suspend fun isMerge(
         list: List<RepositoryEvent>,
         branchName: String
-    ): ResourceState<BranchState> = runBlocking{
+    ): ResourceState<BranchState> = coroutineScope{
         val branchList = arrayListOf<RepositoryEvent>()
         val mapperList = list
             .map { it.copy(payloadRef = it.payloadRef?.replace("refs/heads/", "")) }
@@ -55,7 +63,7 @@ class GetBranchEventUseCase @Inject constructor(
             branchList
                 .filter { it.payloadRef.equals(branchName, ignoreCase = true) || it.head?.ref?.equals(branchName, ignoreCase = true) == true }
 
-        return@runBlocking if (branchEvent.isEmpty()) {
+        return@coroutineScope if (branchEvent.isEmpty()) {
             ResourceState.Success(BranchState.NONE)
         } else {
            if(branchEvent.count{ it.merged == true} > 0){
