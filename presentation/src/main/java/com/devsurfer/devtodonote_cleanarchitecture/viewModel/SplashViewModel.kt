@@ -1,7 +1,6 @@
 package com.devsurfer.devtodonote_cleanarchitecture.viewModel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devsurfer.data.manager.PreferenceManager
 import com.devsurfer.devtodonote_cleanarchitecture.BuildConfig
@@ -27,7 +26,7 @@ class SplashViewModel @Inject constructor(
     private val _authorizeState  = MutableSharedFlow<ResourceState<Unit>>()
     val authorizeState = _authorizeState.asSharedFlow()
 
-    val loading: LiveData<Boolean> get() = isLoading
+    val loading: LiveData<Boolean> get() = _isLoading
 
     init {
         accessToken = try{
@@ -41,17 +40,17 @@ class SplashViewModel @Inject constructor(
         val delayTime = if(BuildConfig.DEBUG) 1_000L else 2_000L
         viewModelScope.launch {
             delay(delayTime)
-            isLoading.postValue(true)
+            _isLoading.postValue(true)
             if(accessToken.isBlank()){
                 _authorizeState.emit(ResourceState.Error(failure = Failure.UnAuthorizeUser))
-                isLoading.postValue(false)
+                _isLoading.postValue(false)
             }else{
                 if(userDataManager.getUser() != null){
                     _authorizeState.emit(ResourceState.Success(Unit))
-                    isLoading.postValue(false)
+                    _isLoading.postValue(false)
                 }else{
                     _authorizeState.emit(ResourceState.Error(failure = Failure.UnAuthorizeUser))
-                    isLoading.postValue(false)
+                    _isLoading.postValue(false)
                 }
             }
         }

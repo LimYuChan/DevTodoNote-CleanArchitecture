@@ -10,8 +10,7 @@ import javax.inject.Inject
 class GetUserRepositoriesUseCase @Inject constructor(
     private val repository: UserDataRepository
 ) {
-    operator fun invoke(): Flow<ResourceState<List<UserRepository>>> = flow {
-        emit(ResourceState.Loading())
+    operator fun invoke(): Flow<List<UserRepository>> = flow {
         emit(repository.getUserRepositories())
     }
 }

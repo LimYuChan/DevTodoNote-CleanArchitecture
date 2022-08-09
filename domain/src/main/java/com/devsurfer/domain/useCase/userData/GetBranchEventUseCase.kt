@@ -21,33 +21,23 @@ class GetBranchEventUseCase @Inject constructor(
         owner: String,
         repo: String,
         branchName: String
-    ): Flow<ResourceState<BranchState>> = flow {
+    ): Flow<BranchState> = flow {
         val result = withContext(Dispatchers.IO) {
             repository.getUserRepositoryEvents(
                 owner,
                 repo
             )
         }
-        when (result) {
-            is ResourceState.Success -> {
-                val isMergeResult = withContext(Dispatchers.Default){
-                    isMerge(result.data, branchName)
-                }
-                emit(isMergeResult)
-            }
-            is ResourceState.Error -> {
-                emit(ResourceState.Error(failure = result.failure))
-            }
-            else->{
-
-            }
+        val isMergeResult = withContext(Dispatchers.Default){
+            isMerge(result, branchName)
         }
+        emit(isMergeResult)
     }
 
     private suspend fun isMerge(
         list: List<RepositoryEvent>,
         branchName: String
-    ): ResourceState<BranchState> = coroutineScope{
+    ): BranchState = coroutineScope{
         val branchList = arrayListOf<RepositoryEvent>()
         val mapperList = list
             .map { it.copy(payloadRef = it.payloadRef?.replace("refs/heads/", "")) }
@@ -64,12 +54,12 @@ class GetBranchEventUseCase @Inject constructor(
                 .filter { it.payloadRef.equals(branchName, ignoreCase = true) || it.head?.ref?.equals(branchName, ignoreCase = true) == true }
 
         return@coroutineScope if (branchEvent.isEmpty()) {
-            ResourceState.Success(BranchState.NONE)
+            BranchState.NONE
         } else {
            if(branchEvent.count{ it.merged == true} > 0){
-               ResourceState.Success(BranchState.MERGE)
+               BranchState.MERGE
            }else{
-               ResourceState.Success(BranchState.COMMIT)
+               BranchState.COMMIT
            }
         }
     }

@@ -13,7 +13,8 @@ import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.*
+import java.lang.NullPointerException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,29 +26,26 @@ class DrawingBoardViewModel @Inject constructor(
     val saveState = _saveState.receiveAsFlow()
 
     fun saveDrawingBoard(pathPointList: List<DrawingPoint>, canvasScreenShot: Bitmap) {
-        modelScope.launch(coroutineExceptionHandler) {
+        modelScope.launch {
             _saveState.send(ResourceState.Loading())
             val pathPointSaveJob = Gson().toJson(pathPointList)
-            val canvasImageSaveJob = bitmapSaveUseCase.invoke(canvasScreenShot)
 
-            if (pathPointSaveJob.isNullOrBlank() || canvasImageSaveJob is ResourceState.Error) {
-                _saveState.send(ResourceState.Error(failure = Failure.UnHandleError()))
-            } else {
-                _saveState.send(
+            bitmapSaveUseCase.invoke(canvasScreenShot).onStart {
+                if(pathPointSaveJob.isNullOrBlank()){
+                    throw NullPointerException()
+                }
+            }.onEach {
+                if(it is ResourceState.Success){
                     ResourceState.Success(
                         data = DrawingBoard(
                             fileJsonString = pathPointSaveJob,
-                            fileImageUrl = (canvasImageSaveJob as ResourceState.Success).data
+                            fileImageUrl = (it as ResourceState.Success).data
                         )
                     )
-                )
-            }
-        }
-    }
-
-    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
-        modelScope.launch {
-            _saveState.send(ResourceState.Error(failure = Failure.UnHandleError(exception.message ?: "")))
+                }
+            }.catch {
+                _saveState.send(ResourceState.Error(failure = Failure.UnHandleError()))
+            }.launchIn(modelScope)
         }
     }
 }

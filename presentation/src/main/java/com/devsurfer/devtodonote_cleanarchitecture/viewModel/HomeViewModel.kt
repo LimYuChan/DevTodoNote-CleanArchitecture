@@ -26,21 +26,17 @@ class HomeViewModel @Inject constructor(
     private val userDataManager: UserDataManager
 ): BaseViewModel(){
 
-    private val _repositories = Channel<ResourceState<List<UserRepository>>>()
+    private val _repositories = Channel<List<UserRepository>>()
     val repositories = _repositories.receiveAsFlow()
-    private val _userData = MutableLiveData<ResourceState<User>>()
-    val userData: LiveData<ResourceState<User>> get() = _userData
+    private val _userData = MutableLiveData<User>()
+    val userData: LiveData<User> get() = _userData
 
 
     fun loadUserData(){
         modelScope.launch {
             userDataManager.getUserWithUpdate().apply {
-                if(this == null){
-                    _userData.value = ResourceState.Error(failure = Failure.UnAuthorizeUser)
-                }else{
-                    _userData.value = ResourceState.Success(data = this)
-                    getUserRepositories()
-                }
+                _userData.value = this
+                getUserRepositories()
             }
         }
     }
@@ -48,9 +44,6 @@ class HomeViewModel @Inject constructor(
     private fun getUserRepositories(){
         getRepositoriesUseCase().onEach {
             _repositories.send(it)
-        }.catch { exception ->
-            Log.e(TAG, "casedBy: ${exception.message}")
-            _repositories.send(ResourceState.Error(failure = Failure.UnHandleError(exception.message ?: "")))
         }.launchIn(modelScope)
     }
 

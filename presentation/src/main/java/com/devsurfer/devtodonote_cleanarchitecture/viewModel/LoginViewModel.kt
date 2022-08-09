@@ -16,9 +16,11 @@ import com.devsurfer.domain.state.ResourceState
 import com.devsurfer.domain.useCase.auth.GetAccessTokenUseCase
 import com.devsurfer.domain.util.StringUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,8 +36,8 @@ class LoginViewModel @Inject constructor(
     private val _loginState = Channel<ResourceState<Unit>>()
     val loginState = _loginState.receiveAsFlow()
 
-    val loading: LiveData<Boolean> get() = isLoading
     val errorEvent: LiveData<Event<BaseViewModelState>> get() = error
+    val isLoading: LiveData<Boolean> get() = _isLoading
 
     private var loginStateKey =""
 
@@ -57,37 +59,22 @@ class LoginViewModel @Inject constructor(
 
     fun getAccessToken(code: String){
         if(preferenceManager.clear()){
-            useCase(code = code).onEach {
-                when(it){
-                    is ResourceState.Success->{
-                        updateAccessToken(it.data.accessToken)
-                        isLoading.postValue(false)
-                    }
-                    is ResourceState.Error->{
-                        _loginState.send(ResourceState.Error(failure = it.failure))
-                        isLoading.postValue(false)
-                    }
-                    else->{
-                        isLoading.postValue(true)
-//                        _loginState.send(ResourceState.Loading())
-                    }
+            useCase(code = code).onStart {
+                _isLoading.postValue(true)
+            }.onEach {
+                val updateAccessTokenJob = withContext(Dispatchers.IO){
+                    preferenceManager.updateAccessToken(it.accessToken)
                 }
-            }.catch { exception ->
-                Log.e(TAG, "casedBy: ${exception.message}")
-                _loginState.send(ResourceState.Error(failure = Failure.UnHandleError(exception.message ?: "")))
+                _loginState.send(
+                    if(updateAccessTokenJob){
+                        ResourceState.Success(Unit)
+                    }else{
+                        ResourceState.Error()
+                    }
+                )
+            }.onCompletion {
+                _isLoading.postValue(false)
             }.launchIn(modelScope)
-        }
-    }
-
-    private fun updateAccessToken(accessToken: String){
-        modelScope.launch {
-            _loginState.send(
-                if(preferenceManager.updateAccessToken(accessToken)){
-                    ResourceState.Success(Unit)
-                }else{
-                    ResourceState.Error()
-                }
-            )
         }
     }
 

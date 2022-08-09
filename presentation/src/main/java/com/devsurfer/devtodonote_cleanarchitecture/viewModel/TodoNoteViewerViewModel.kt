@@ -59,12 +59,12 @@ class TodoNoteViewerViewModel @Inject constructor(
 
     fun deleteNote(){
         _note.value?.let {
-            modelScope.launch(coroutineExceptionHandler) {
+            modelScope.launch {
                 _deleteState.send(ResourceState.Loading())
                 val deleteCount = async {
                     deleteNoteUseCase(it.content.contentId)
-                }.await()
-                if(deleteCount > 0){
+                }
+                if(deleteCount.await() > 0){
                     _deleteState.send(ResourceState.Success(Unit))
                 }else{
                     _deleteState.send(ResourceState.Error(failure = Failure.UnHandleError()))
@@ -77,28 +77,11 @@ class TodoNoteViewerViewModel @Inject constructor(
         _note.value?.let {
             getBranchEventUseCase(owner = userDataManager.getUser()?.login ?: "", repo = repo, branchName = it.content.branch ?: "")
                 .onEach { result ->
-                    when(result){
-                        is ResourceState.Success->{
-                            updateNoteContentUseCase(
-                                it.content.copy(branchState = result.data.value, status = if(result.data.value != BranchState.NONE.value) TodoState.DONE.value else TodoState.TODO.value)
-                            )
-                            getNoteData()
-                        }
-                        is ResourceState.Error->{
-                            //todo 에러 핸들러 통합 작업 예정
-                        }
-                        else->{
-                            //todo 로딩 핸들러 통합 예정
-                        }
-                    }
+                    updateNoteContentUseCase(
+                        it.content.copy(branchState = result.value, status = if(result.value != BranchState.NONE.value) TodoState.DONE.value else TodoState.TODO.value)
+                    )
+                    getNoteData()
                 }.launchIn(modelScope)
-        }
-    }
-    
-    private val coroutineExceptionHandler = CoroutineExceptionHandler{ _, exception ->
-        modelScope.launch {
-            Log.d(TAG, ":${exception.message} ")
-            _deleteState.send(ResourceState.Error(failure = Failure.UnHandleError(exception.message ?: "")))
         }
     }
 

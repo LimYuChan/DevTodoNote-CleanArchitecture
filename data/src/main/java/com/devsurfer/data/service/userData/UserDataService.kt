@@ -10,17 +10,17 @@ import retrofit2.http.Query
 
 interface UserDataService {
     @GET("/user")
-    suspend fun getUserData(): Response<UserResponse>
+    suspend fun getUserData(): UserResponse
 
     @GET("user/repos")
     suspend fun getUserRepos(
         @Query("visibility") visibility: String = "all",
         @Query("sort") sort: String = "updated"
-    ): Response<List<UserRepositoryResponse>>
+    ): List<UserRepositoryResponse>
 
     @GET("/repos/{owner}/{repo}/events")
     suspend fun getUserRepositoryEvents(
         @Path("owner") owner: String,
         @Path("repo") repo: String
-    ): Response<List<RepositoryEventResponse>>
+    ): List<RepositoryEventResponse>
 }

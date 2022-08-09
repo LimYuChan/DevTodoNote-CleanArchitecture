@@ -8,5 +8,5 @@ import javax.inject.Inject
 class GetUserDataUseCase @Inject constructor(
     private val repository: UserDataRepository
 ){
-    suspend operator fun invoke(): ResourceState<User> = repository.getUserData()
+    suspend operator fun invoke(): User = repository.getUserData()
 }

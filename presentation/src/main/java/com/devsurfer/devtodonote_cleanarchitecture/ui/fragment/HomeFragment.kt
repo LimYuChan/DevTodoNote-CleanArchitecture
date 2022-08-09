@@ -44,40 +44,17 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     override fun initListener() {
         viewModel.userData.observe(viewLifecycleOwner){
-            when(it){
-                is ResourceState.Success->{
-                    binding.user = it.data
-                    binding.layoutUserProfile.setOnClickListener { view ->
-                        if(isAttachInActivity()){
-                            Utils.openProfileBottomSheet(childFragmentManager, it.data.htmlUrl)
-                        }
-                    }
-                }
-                is ResourceState.Error->{
-                    errorHandler(it.failure)
-                }
-                else->{
-
+            binding.user = it
+            binding.layoutUserProfile.setOnClickListener { view ->
+                if(isAttachInActivity()){
+                    Utils.openProfileBottomSheet(childFragmentManager, it.htmlUrl)
                 }
             }
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenResumed { 
             viewModel.repositories.collectLatest {
-                Log.d(TAG, "initListener: $it")
-                when(it){
-                    is ResourceState.Success->{
-                        binding.layoutLoadingProgress.root.visibility = View.GONE
-                        adapter.submitList(it.data)
-                    }
-                    is ResourceState.Error->{
-                        binding.layoutLoadingProgress.root.visibility = View.GONE
-                        errorHandler(it.failure)
-                    }
-                    else->{
-                        binding.layoutLoadingProgress.root.visibility = View.VISIBLE
-                    }
-                }
+                adapter.submitList(it)
                 binding.swipeRefreshLayout.isRefreshing = false
             }
         }

@@ -1,7 +1,9 @@
 package com.devsurfer.data.di
 
 import com.devsurfer.data.BuildConfig
+import com.devsurfer.data.exception.NetworkException
 import com.devsurfer.data.manager.PreferenceManager
+import com.devsurfer.data.util.Constants
 import com.devsurfer.data.util.GithubApiInterceptor
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -26,6 +28,18 @@ object RetrofitModule {
             else HttpLoggingInterceptor.Level.NONE
     }
 
+    private val exceptionInterceptor = Interceptor{chain ->
+        val response = chain.proceed(chain.request())
+        when(response.code){
+            Constants.ERROR_CODE_NOT_MODIFIED -> throw NetworkException.NotModified()
+            Constants.ERROR_CODE_BAD_REQUEST -> throw  NetworkException.BadRequest()
+            Constants.ERROR_CODE_REQUIRES_AUTHENTICATION -> throw NetworkException.RequiresAuthentication()
+            Constants.ERROR_CODE_FORBIDDEN -> throw NetworkException.Forbidden()
+            Constants.ERROR_CODE_RESOURCE_NOT_FOUND -> throw NetworkException.ResourceNotFound()
+            Constants.ERROR_CODE_VALIDATION_FAILED -> throw NetworkException.ValidationFailed()
+            else-> response
+        }
+    }
     private val gson = GsonBuilder().setLenient().create()
 
     private const val GITHUB_AUTH_URL = "https://github.com/"
@@ -84,6 +98,7 @@ object RetrofitModule {
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .addInterceptor(githubApiInterceptor)
+            .addInterceptor(exceptionInterceptor)
             .build()
 
     @Singleton

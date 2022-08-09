@@ -1,21 +1,20 @@
 package com.devsurfer.devtodonote_cleanarchitecture.viewModel
 
 import android.util.Log
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.devsurfer.devtodonote_cleanarchitecture.base.BaseViewModel
 import com.devsurfer.domain.enums.TodoState
 import com.devsurfer.domain.manager.UserDataManager
 import com.devsurfer.domain.model.note.Note
-import com.devsurfer.domain.model.userData.RepositoryEvent
 import com.devsurfer.domain.state.Failure
 import com.devsurfer.domain.state.ResourceState
 import com.devsurfer.domain.useCase.todo.GetTodoListUseCase
-import com.devsurfer.domain.useCase.userData.GetRepositoryEventsUseCase
 import com.devsurfer.domain.util.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.receiveAsFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,9 +31,6 @@ class TodoListViewModel @Inject constructor(
 
        getTodoListUseCase(repositoryId = repositoryId, state = state).onEach {
             _todoList.send(it)
-        }.catch {
-            Log.d(TAG, "getTodoList: ${it.message}")
-            _todoList.send(ResourceState.Error(failure = Failure.UnHandleError(it.message ?: Constants.TOAST_ERROR_UNHANDLED)))
         }.launchIn(modelScope)
     }
 

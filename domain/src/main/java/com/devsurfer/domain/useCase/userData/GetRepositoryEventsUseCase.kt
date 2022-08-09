@@ -11,8 +11,7 @@ import javax.inject.Inject
 class GetRepositoryEventsUseCase @Inject constructor(
     private val repository: UserDataRepository
 ) {
-    operator fun invoke(owner: String, repo: String): Flow<ResourceState<List<RepositoryEvent>>> = flow {
-        emit(ResourceState.Loading())
+    operator fun invoke(owner: String, repo: String): Flow<List<RepositoryEvent>> = flow {
         emit(repository.getUserRepositoryEvents(owner, repo))
     }
 }

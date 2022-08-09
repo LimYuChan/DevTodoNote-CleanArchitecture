@@ -23,8 +23,8 @@ class UserDataManager @Inject constructor(
         var resultUserData: User? = null
         val getUserDataResult = async {
             getUserDataUseCase()
-        }.await()
-        resultUserData = if(getUserDataResult is ResourceState.Success) getUserDataResult.data else null
+        }
+        resultUserData = getUserDataResult.await()
         return@runBlocking resultUserData
     }
 }

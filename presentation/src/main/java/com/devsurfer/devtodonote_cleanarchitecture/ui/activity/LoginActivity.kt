@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.devsurfer.devtodonote_cleanarchitecture.R
 import com.devsurfer.devtodonote_cleanarchitecture.base.BaseActivity
@@ -74,9 +75,8 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(R.layout.activity_login)
     }
 
     override fun initObserver() {
-        viewModel.loading.observe(this) {
-            if (it) binding.layoutLoadingProgress.root.visibility = View.VISIBLE
-            else binding.layoutLoadingProgress.root.visibility = View.GONE
+        viewModel.isLoading.observe(this) {
+            binding.layoutLoadingProgress.root.isVisible = it
         }
 
         viewModel.errorEvent.observe(this, EventObserver {

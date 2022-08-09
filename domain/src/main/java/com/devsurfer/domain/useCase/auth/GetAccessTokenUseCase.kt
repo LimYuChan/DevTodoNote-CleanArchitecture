@@ -10,8 +10,7 @@ import javax.inject.Inject
 class GetAccessTokenUseCase @Inject constructor(
     private val repository: AuthRepository
 ){
-    operator fun invoke(code: String): Flow<ResourceState<AuthToken>> = flow{
-        emit(ResourceState.Loading())
+    operator fun invoke(code: String): Flow<AuthToken> = flow{
         emit(repository.getAccessToken(code))
     }
 }

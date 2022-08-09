@@ -6,7 +6,7 @@ import com.devsurfer.domain.model.userData.UserRepository
 import com.devsurfer.domain.state.ResourceState
 
 interface UserDataRepository {
-    suspend fun getUserData(): ResourceState<User>
-    suspend fun getUserRepositories(): ResourceState<List<UserRepository>>
-    suspend fun getUserRepositoryEvents(owner: String, repo: String): ResourceState<List<RepositoryEvent>>
+    suspend fun getUserData(): User
+    suspend fun getUserRepositories(): List<UserRepository>
+    suspend fun getUserRepositoryEvents(owner: String, repo: String): List<RepositoryEvent>
 }

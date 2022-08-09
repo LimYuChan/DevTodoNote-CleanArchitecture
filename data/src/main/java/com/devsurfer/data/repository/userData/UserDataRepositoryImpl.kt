@@ -11,14 +11,14 @@ import javax.inject.Inject
 class UserDataRepositoryImpl @Inject constructor(
     private val dataSource: UserDataRemoteDataSource
 ): UserDataRepository {
-    override suspend fun getUserData(): ResourceState<User> =
+    override suspend fun getUserData(): User =
         dataSource.getUserData()
 
-    override suspend fun getUserRepositories(): ResourceState<List<UserRepository>> =
+    override suspend fun getUserRepositories(): List<UserRepository> =
         dataSource.getUserRepositories()
 
     override suspend fun getUserRepositoryEvents(
         owner: String,
         repo: String
-    ): ResourceState<List<RepositoryEvent>> = dataSource.getRepositoryEvents(owner, repo)
+    ): List<RepositoryEvent> = dataSource.getRepositoryEvents(owner, repo)
 }

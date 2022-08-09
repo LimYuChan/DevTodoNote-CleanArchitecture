@@ -14,7 +14,7 @@ import kotlinx.coroutines.*
 abstract class BaseViewModel: ViewModel() {
 
     // Loading 에 관한 변수. 뷰모델 LiveData 선언 해서 사용.
-    protected val isLoading = MutableLiveData(false)
+    protected val _isLoading = MutableLiveData(false)
     // state 에 관한 변수. 특히 Error 처리 할 때 사용.
     protected val error = MutableLiveData<Event<BaseViewModelState>>()
 

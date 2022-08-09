@@ -9,6 +9,6 @@ import javax.inject.Inject
 class AuthRepositoryImpl @Inject constructor(
     private val dataSource: AuthRemoteDataSource
 ): AuthRepository {
-    override suspend fun getAccessToken(code: String): ResourceState<AuthToken> =
+    override suspend fun getAccessToken(code: String): AuthToken =
         dataSource.getAccessToken(code)
 }

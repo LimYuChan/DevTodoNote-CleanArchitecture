@@ -14,5 +14,5 @@ interface AuthService {
         @Field("client_id") clientId: String = BuildConfig.GITHUB_CLIENT_ID,
         @Field("client_secret") clientSecret: String = BuildConfig.GITHUB_SECRET_KEY,
         @Field("code") code: String
-    ): Response<AuthTokenResponse>
+    ): AuthTokenResponse
 }
