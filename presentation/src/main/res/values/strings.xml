@@ -50,4 +50,7 @@
 
     <string name="dummy_content">Accusamus error temporibus debitis. Laboriosam qui amet sed dolor doloribus tempore esse mollitia. Voluptas debitis laudantium officia laudantium vel velit facilis. Necessitatibus sunt maiores. Pariatur libero totam velit rerum illum rem quaerat rerum cumque. Animi rem et.</string>
     <string name="toast_complete_delete_note">Todo 메모가 삭제되었습니다.</string>
+
+    <!-- notification -->
+    <string name="notification_d_day">%s 가 하루 남았습니다.</string>
 </resources>
