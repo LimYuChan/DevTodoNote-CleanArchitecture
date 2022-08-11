@@ -1,5 +1,6 @@
 package com.devsurfer.devtodonote_cleanarchitecture.ui.activity
 
+import android.Manifest
 import android.content.Intent
 import android.util.Log
 import android.view.View
@@ -11,26 +12,54 @@ import com.devsurfer.devtodonote_cleanarchitecture.base.BaseActivity
 import com.devsurfer.devtodonote_cleanarchitecture.base.BaseViewModelState
 import com.devsurfer.devtodonote_cleanarchitecture.databinding.ActivityLoginBinding
 import com.devsurfer.devtodonote_cleanarchitecture.util.EventObserver
+import com.devsurfer.devtodonote_cleanarchitecture.util.Utils
+import com.devsurfer.devtodonote_cleanarchitecture.util.connect.ConnectObserver
 import com.devsurfer.devtodonote_cleanarchitecture.viewModel.LoginViewModel
 import com.devsurfer.domain.state.ResourceState
+import com.gun0912.tedpermission.normal.TedPermission
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginActivity: BaseActivity<ActivityLoginBinding>(R.layout.activity_login){
 
     private val viewModel: LoginViewModel by viewModels()
 
+    @Inject
+    lateinit var networkStatus: ConnectObserver
+
     override fun initData() {
     }
 
     override fun initUI() {
-        binding.buttonLogin.setOnClickListener{
+        binding.buttonLogin.setOnClickListener {
             onLoginClick()
         }
     }
 
     override fun initListener() {
+        lifecycleScope.launchWhenCreated {
+            networkStatus.observer().collectLatest { status ->
+                when(status) {
+                    ConnectObserver.Status.Available -> {
+                        binding.buttonLogin.isEnabled = true
+                    }
+
+                    else -> {
+                        binding.buttonLogin.isEnabled = false
+                        showShortToast(getString(R.string.plz_check_internet)) // snack bar or dialog
+                        /** todo
+                         * 1. contents + close button
+                         * 2. title + contents + close button
+                         * 3. title + contents + positive button + negative button
+                         */
+                        Utils.logError(javaClass.simpleName, "Network Status : ${status.name}")
+                    }
+                }
+            }
+        }
+
         lifecycleScope.launchWhenResumed {
             viewModel.loginState.collectLatest {
                 when(it){

@@ -7,11 +7,13 @@ import android.graphics.Rect
 import android.os.Build
 import android.os.Handler
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.PixelCopy
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.fragment.app.FragmentManager
+import com.devsurfer.devtodonote_cleanarchitecture.BuildConfig
 import com.devsurfer.devtodonote_cleanarchitecture.ui.bottomSheet.OpenWebViewBottomSheet
 
 object Utils {
@@ -49,5 +51,20 @@ object Utils {
                 e.printStackTrace()
             }
         }
+    }
+
+    /**
+     * Log 를 Debug 에만 남기는 습관을 들여야 할 것 같습니다!
+     */
+    fun logDebug(tag: String, message: String) {
+        if (BuildConfig.DEBUG) Log.d(tag, message)
+    }
+
+    fun logError(tag: String, message: String) {
+        if (BuildConfig.DEBUG) Log.e(tag, message)
+    }
+
+    fun logInfo(tag: String, message: String) {
+        if (BuildConfig.DEBUG) Log.i(tag, message)
     }
 }

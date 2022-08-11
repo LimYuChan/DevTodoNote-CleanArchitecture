@@ -9,6 +9,8 @@
     <string name="app_bar_title">Dev Todo Notes</string>
     <string name="app_bar_title_create_note">Todo</string>
 
+    <string name="plz_check_internet">인터넷 연결을 확인 해주세요.</string>
+
     <string name="action_menu_search">Search</string>
     <string name="action_menu_more">More</string>
     <string name="action_menu_done">Done</string>
