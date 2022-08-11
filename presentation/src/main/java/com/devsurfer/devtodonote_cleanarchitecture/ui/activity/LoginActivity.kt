@@ -48,7 +48,12 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(R.layout.activity_login)
 
                     else -> {
                         binding.buttonLogin.isEnabled = false
-                        showShortToast(getString(R.string.plz_check_internet))
+                        showShortToast(getString(R.string.plz_check_internet)) // snack bar or dialog
+                        /** todo
+                         * 1. contents + close button
+                         * 2. title + contents + close button
+                         * 3. title + contents + positive button + negative button
+                         */
                         Utils.logError(javaClass.simpleName, "Network Status : ${status.name}")
                     }
                 }

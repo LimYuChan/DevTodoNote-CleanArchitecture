@@ -51,6 +51,10 @@
         <entry key="presentation/src/main/res/layout/activity_login.xml" value="0.5635416666666667" />
         <entry key="presentation/src/main/res/layout/activity_main.xml" value="0.5635416666666667" />
         <entry key="presentation/src/main/res/layout/activity_splash.xml" value="0.5635416666666667" />
+        <entry key="presentation/src/main/res/layout/fragment_todo_list.xml" value="0.5635416666666667" />
+        <entry key="presentation/src/main/res/layout/fragment_todo_list_wrapper.xml" value="0.5635416666666667" />
+        <entry key="presentation/src/main/res/layout/item_repository.xml" value="0.5635416666666667" />
+        <entry key="presentation/src/main/res/layout/item_todo_note.xml" value="0.5635416666666667" />
         <entry key="presentation/src/main/res/layout/layout_loading_progress.xml" value="0.5635416666666667" />
       </map>
     </option>
