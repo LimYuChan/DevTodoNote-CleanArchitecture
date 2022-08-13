@@ -2,13 +2,10 @@ package com.devsurfer.domain.useCase.note
 
 import android.util.Log
 import com.devsurfer.domain.item.ReferenceLink
-import com.devsurfer.domain.state.Failure
 import com.devsurfer.domain.state.ResourceState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
 import org.jsoup.Jsoup
-import java.io.IOException
 
 /**
  * Update by Yuchan 2022.08.09

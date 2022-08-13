@@ -10,6 +10,7 @@ import com.devsurfer.domain.enums.BranchState
 import com.devsurfer.domain.enums.TodoState
 import com.devsurfer.domain.manager.UserDataManager
 import com.devsurfer.domain.model.note.Note
+import com.devsurfer.domain.model.userData.User
 import com.devsurfer.domain.state.Failure
 import com.devsurfer.domain.state.ResourceState
 import com.devsurfer.domain.useCase.note.DeleteNoteUseCase
@@ -75,13 +76,15 @@ class TodoNoteViewerViewModel @Inject constructor(
     
     fun updateBranchState(repo: String){
         _note.value?.let {
-            getBranchEventUseCase(owner = userDataManager.getUser()?.login ?: "", repo = repo, branchName = it.content.branch ?: "")
-                .onEach { result ->
-                    updateNoteContentUseCase(
-                        it.content.copy(branchState = result.value, status = if(result.value != BranchState.NONE.value) TodoState.DONE.value else TodoState.TODO.value)
-                    )
-                    getNoteData()
-                }.launchIn(modelScope)
+            modelScope.launch {
+                getBranchEventUseCase(owner = userDataManager.getUser().login ?: "", repo = repo, branchName = it.content.branch ?: "")
+                    .onEach { result ->
+                        updateNoteContentUseCase(
+                            it.content.copy(branchState = result.value, status = if(result.value != BranchState.NONE.value) TodoState.DONE.value else TodoState.TODO.value)
+                        )
+                        getNoteData()
+                    }.launchIn(modelScope)
+            }
         }
     }
 

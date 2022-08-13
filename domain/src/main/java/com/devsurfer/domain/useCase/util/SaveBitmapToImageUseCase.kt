@@ -5,11 +5,8 @@ import android.graphics.Bitmap
 import com.devsurfer.domain.state.Failure
 import com.devsurfer.domain.state.ResourceState
 import com.devsurfer.domain.util.StringUtils
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -19,7 +16,7 @@ import javax.inject.Inject
 class SaveBitmapToImageUseCase @Inject constructor(
     private val context: Context
 ){
-    suspend operator fun invoke(bitmap: Bitmap): Flow<ResourceState<String>> = flow{
+    operator fun invoke(bitmap: Bitmap): String?{
         val dir = context.externalCacheDir?.absoluteFile
         var fos: OutputStream? = null
         if(dir != null){
@@ -30,19 +27,18 @@ class SaveBitmapToImageUseCase @Inject constructor(
                 val fileName = "${StringUtils.getNowTimeStamp()}.png"
                 fos = FileOutputStream(File(dir, fileName))
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
-                emit(ResourceState.Success(fileName))
+                return fileName
             }catch (exception: IOException){
-                emit(ResourceState.Error(failure = Failure.UnHandleError()))
+                return null
             }catch (throwable: Throwable){
-                emit(ResourceState.Error(failure = Failure.UnHandleError()))
+                return null
             }catch (exception: Exception) {
-                emit(ResourceState.Error(failure = Failure.UnHandleError()))
+                return null
             }finally {
                 fos?.close()
             }
         }else{
-            emit(ResourceState.Error(failure = Failure.UnHandleError()))
+            return null
         }
-
     }
 }

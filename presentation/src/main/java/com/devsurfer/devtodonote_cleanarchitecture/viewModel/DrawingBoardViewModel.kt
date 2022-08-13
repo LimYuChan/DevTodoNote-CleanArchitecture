@@ -1,6 +1,7 @@
 package com.devsurfer.devtodonote_cleanarchitecture.viewModel
 
 import android.graphics.Bitmap
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devsurfer.devtodonote_cleanarchitecture.base.BaseViewModel
@@ -25,27 +26,27 @@ class DrawingBoardViewModel @Inject constructor(
     private val _saveState = Channel<ResourceState<DrawingBoard>>()
     val saveState = _saveState.receiveAsFlow()
 
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
     fun saveDrawingBoard(pathPointList: List<DrawingPoint>, canvasScreenShot: Bitmap) {
         modelScope.launch {
-            _saveState.send(ResourceState.Loading())
+            _isLoading.postValue(true)
             val pathPointSaveJob = Gson().toJson(pathPointList)
+            val saveBitmap = bitmapSaveUseCase.invoke(bitmap = canvasScreenShot)
 
-            bitmapSaveUseCase.invoke(canvasScreenShot).onStart {
-                if(pathPointSaveJob.isNullOrBlank()){
-                    throw NullPointerException()
-                }
-            }.onEach {
-                if(it is ResourceState.Success){
+            if(saveBitmap.isNullOrBlank()){
+                _saveState.send(ResourceState.Error(failure = Failure.UnHandleError()))
+            }else{
+                _saveState.send(
                     ResourceState.Success(
                         data = DrawingBoard(
                             fileJsonString = pathPointSaveJob,
-                            fileImageUrl = (it as ResourceState.Success).data
+                            fileImageUrl = saveBitmap
                         )
                     )
-                }
-            }.catch {
-                _saveState.send(ResourceState.Error(failure = Failure.UnHandleError()))
-            }.launchIn(modelScope)
+                )
+            }
+            _isLoading.postValue(false)
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.devsurfer.domain.useCase.note
 
-import android.util.Log
 import com.devsurfer.domain.item.DrawingBoard
 import com.devsurfer.domain.item.ReferenceLink
 import com.devsurfer.domain.model.note.NoteContent
@@ -11,14 +10,9 @@ import com.devsurfer.domain.repository.note.NoteContentRepository
 import com.devsurfer.domain.repository.note.NoteDrawingBoardRepository
 import com.devsurfer.domain.repository.note.NoteImageRepository
 import com.devsurfer.domain.repository.note.NoteReferenceLinkRepository
-import com.devsurfer.domain.state.Failure
 import com.devsurfer.domain.state.ResourceState
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
-import java.io.IOException
 import javax.inject.Inject
 
 class UpdateNoteUseCase @Inject constructor(
@@ -40,12 +34,15 @@ class UpdateNoteUseCase @Inject constructor(
         imageRepository.deleteImagesByContentId(content.contentId)
         drawingBoardRepository.deleteBoardsByContentId(content.contentId)
         referenceLinkRepository.deleteReferenceLinksByContentId(content.contentId)
+
         imageRepository.insertImages(*images.map {
             it.copy(noteContentId = content.contentId)
         }.toTypedArray())
+
         drawingBoardRepository.insertBoards(*drawingBoards.map {
             NoteDrawingBoard(noteContentId = content.contentId, fileJsonString = it.fileJsonString, fileImageUrl = it.fileImageUrl)
         }.toTypedArray())
+
         referenceLinkRepository.insertLinks(*referenceLinks.map {
             NoteReferenceLink(noteContentId = content.contentId, title = it.title, description = it.description, image = it.image, link = it.url ?: "")
         }.toTypedArray())

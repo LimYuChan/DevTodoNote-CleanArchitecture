@@ -1,6 +1,5 @@
 package com.devsurfer.domain.useCase.note
 
-import android.util.Log
 import com.devsurfer.domain.item.DrawingBoard
 import com.devsurfer.domain.item.ReferenceLink
 import com.devsurfer.domain.model.note.NoteContent
@@ -16,9 +15,7 @@ import com.devsurfer.domain.state.ResourceState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import java.io.IOException
 import javax.inject.Inject
 
 /**
